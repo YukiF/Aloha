@@ -39,10 +39,12 @@
     
     //コンパス用
     UIImageView *arrowPic;
-    //アロー用
-    UIImageView *arrowPicNew;
+    //アローの背景
+    UIImageView *sky;
     //効果音
     SystemSoundID shot;
+    //連続で押せないように
+    int shotJudge;
 
 
     //タッチされた場所の判定

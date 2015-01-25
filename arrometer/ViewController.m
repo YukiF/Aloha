@@ -114,28 +114,6 @@
     circlePic.center = CGPointMake(rect.size.width/2, rect.size.height/5*3);
     [filterView addSubview:circlePic];
     
-    //コンパスの表示
-    UIImage *arrow = [UIImage imageNamed:@"arrow.png"];
-    arrowPic = [[UIImageView alloc]initWithImage:arrow];
-    arrowPic.frame = CGRectMake(0,0,rect.size.width/6,rect.size.width/2);
-    arrowPic.center = CGPointMake(rect.size.width/2, rect.size.height/5*3);
-    arrowPic.transform = CGAffineTransformMakeRotation(180 * M_PI/180);
-    [filterView addSubview:arrowPic];
-    
-    //arrowの表示
-    arrowPicNew = [[UIImageView alloc]initWithImage:arrow];
-    arrowPicNew.frame = CGRectMake(0,0,rect.size.width/6,rect.size.width/2);
-    arrowPicNew.center = CGPointMake(rect.size.width/2, rect.size.height/5*3);
-    arrowPicNew.transform = CGAffineTransformMakeRotation(180 * M_PI/180);
-    [filterView addSubview:arrowPicNew];
-    arrowPicNew.alpha = 0.0;
-    //arrowの音
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"新規録音" ofType:@"wav"];
-    NSURL *url = [NSURL fileURLWithPath:path];
-    AudioServicesCreateSystemSoundID((CFURLRef)CFBridgingRetain(url), &shot);
-
-    
-    
     //距離を示すラベル
     meterLabel = [[UILabel alloc] init];
     meterLabel.frame = CGRectMake(160,8,rect.size.width,rect.size.width/4);
@@ -144,6 +122,27 @@
     meterLabel.textColor = [UIColor colorWithRed:0.11373 green:0.29412 blue:0.61961 alpha:1.0];
     meterLabel.textAlignment = NSTextAlignmentCenter;
     [filterView addSubview:meterLabel];
+    
+    //arrowが飛ぶ時の背景
+    UIImage *sky1 = [UIImage imageNamed:@"sky1.jpg"];
+    sky = [[UIImageView alloc]initWithImage:sky1];
+    sky.frame = CGRectMake(0,-344,1920,1080);
+    sky.alpha = 0.0;
+    [filterView addSubview:sky];
+    
+    //arrowの表示
+    UIImage *arrow = [UIImage imageNamed:@"arrow.png"];
+    arrowPic = [[UIImageView alloc]initWithImage:arrow];
+    arrowPic.frame = CGRectMake(0,0,rect.size.width/6,rect.size.width/2);
+    arrowPic.center = CGPointMake(rect.size.width/2, rect.size.height/5*3);
+    arrowPic.transform = CGAffineTransformMakeRotation(180 * M_PI/180);
+    [filterView addSubview:arrowPic];
+    //arrowの音
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"新規録音" ofType:@"wav"];
+    NSURL *url = [NSURL fileURLWithPath:path];
+    AudioServicesCreateSystemSoundID((CFURLRef)CFBridgingRetain(url), &shot);
+    shotJudge = 0;
+
     
     filterView.alpha = 0.0;
     
@@ -233,17 +232,6 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
      */
     //ここが怪しい
     arrowPic.transform = CGAffineTransformMakeRotation((360-(targetAzimuth + 180)) * M_PI/180);
-    
-    if (targetAzimuth <= 15 || targetAzimuth >= 345) {
-        arrowPicNew.center = CGPointMake(rect.size.width/2, rect.size.height/5*3);
-        arrowPicNew.alpha = 1.0;
-    }else{
-        
-        arrowPicNew.center = CGPointMake(rect.size.width/2, rect.size.height/5*3);
-        arrowPicNew.alpha = 0.0;
-
-        
-    }
     
     
 }
@@ -397,10 +385,18 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
 }
 
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{
-        touch = [touches anyObject];
-        location2 = [touch locationInView:filterView];
-        NSLog(@"x:%f y:%f", location2.x, location2.y);
-        arrowPicNew.center = CGPointMake(rect.size.width/2, rect.size.height/5*3 + ((location2.y - location1.y)/2));
+    
+    if (targetAzimuth <= 15 || targetAzimuth >= 345) {
+        if (shotJudge == 0) {
+            touch = [touches anyObject];
+            location2 = [touch locationInView:filterView];
+            NSLog(@"x:%f y:%f", location2.x, location2.y);
+            [locationManager stopUpdatingHeading];
+            arrowPic.center = CGPointMake(rect.size.width/2, rect.size.height/5*3 + ((location2.y - location1.y)/2));
+            arrowPic.transform = CGAffineTransformMakeRotation(180 * M_PI/180);
+
+        }
+    }
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
@@ -422,16 +418,30 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
             [locationManager stopUpdatingHeading];
         }
     }else{
+        if (targetAzimuth <= 15 || targetAzimuth >= 345) {
         
-        AudioServicesPlaySystemSound(shot);
-        [UIView animateWithDuration:2.0f
-                         animations:^{
-                             // アニメーションをする処理
-                             arrowPicNew.center = CGPointMake(rect.size.width/2, -300);
-                         }];
-
+            if (shotJudge == 0) {
+                shotJudge = 1;
+                sky.alpha = 1.0;
+                AudioServicesPlaySystemSound(shot);
+                arrowPic.transform = CGAffineTransformMakeRotation(180 * M_PI/180);
+                [UIView animateWithDuration:1.5f
+                                 animations:^{
+                                     // アニメーションをする処理
+                                     arrowPic.center = CGPointMake(rect.size.width/2,-300);
+                                     sky.frame = CGRectMake(0,0,1920,1080);
+                                 }
+                                 completion:^(BOOL finished){
+                                     // アニメーションが終わった後実行する処理
+                                     arrowPic.center = CGPointMake(rect.size.width/2, rect.size.height/5*3);
+                                     shotJudge = 0;
+                                     sky.alpha = 0.0;
+                                     sky.frame = CGRectMake(0,-344,1920,1080);
+                                     [locationManager startUpdatingHeading]; // コンパスの向きを取得
+                                 }];
+            }
+        }
     }
-    
 }
 
 -(void)toOption:(UIButton*)button{

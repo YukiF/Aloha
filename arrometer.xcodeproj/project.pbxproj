@@ -24,6 +24,7 @@
 		98625C531A5FA84A0021B929 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98625C521A5FA84A0021B929 /* LoginViewController.m */; };
 		986B875E1A7587D6001EA102 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 986B875D1A7587D6001EA102 /* AudioToolbox.framework */; };
 		986B87601A759370001EA102 /* 新規録音.wav in Resources */ = {isa = PBXBuildFile; fileRef = 986B875F1A759370001EA102 /* 新規録音.wav */; };
+		986B87621A75A5B0001EA102 /* sky1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 986B87611A75A5B0001EA102 /* sky1.jpg */; };
 		989C48741A632BA900035BD6 /* userBack6.png in Resources */ = {isa = PBXBuildFile; fileRef = 989C48731A632BA900035BD6 /* userBack6.png */; };
 		98E48AD01A6227310021B014 /* fukidasi.png in Resources */ = {isa = PBXBuildFile; fileRef = 98E48ACF1A6227310021B014 /* fukidasi.png */; };
 		98E48AD31A622ED00021B014 /* OptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E48AD21A622ED00021B014 /* OptionViewController.m */; };
@@ -80,6 +81,7 @@
 		98625C521A5FA84A0021B929 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginViewController.m; path = ../LoginViewController.m; sourceTree = "<group>"; };
 		986B875D1A7587D6001EA102 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		986B875F1A759370001EA102 /* 新規録音.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "新規録音.wav"; sourceTree = "<group>"; };
+		986B87611A75A5B0001EA102 /* sky1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky1.jpg; sourceTree = "<group>"; };
 		989C48731A632BA900035BD6 /* userBack6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = userBack6.png; sourceTree = "<group>"; };
 		98E48ACF1A6227310021B014 /* fukidasi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fukidasi.png; sourceTree = "<group>"; };
 		98E48AD11A622ED00021B014 /* OptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OptionViewController.h; path = ../OptionViewController.h; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 		98F197FB1A58B6EE00869846 /* VCds */ = {
 			isa = PBXGroup;
 			children = (
+				986B87611A75A5B0001EA102 /* sky1.jpg */,
 				98E48ACF1A6227310021B014 /* fukidasi.png */,
 				98625C3F1A5F76A60021B929 /* userBack1.png */,
 				98625C401A5F76A60021B929 /* userBack2.png */,
@@ -203,8 +206,8 @@
 				98E48ACD1A6226AA0021B014 /* FVCds */,
 				98E48ACE1A6226EF0021B014 /* SULIVCds */,
 				98F197FB1A58B6EE00869846 /* VCds */,
-				98FEF42E1A5867DD00B2AE63 /* AppDelegate.h */,
 				986B875F1A759370001EA102 /* 新規録音.wav */,
+				98FEF42E1A5867DD00B2AE63 /* AppDelegate.h */,
 				98FEF42F1A5867DD00B2AE63 /* AppDelegate.m */,
 				98FEF4371A5867DD00B2AE63 /* Main.storyboard */,
 				98625C3A1A5F5C190021B929 /* firstViewController.h */,
@@ -300,6 +303,7 @@
 				TargetAttributes = {
 					98FEF4261A5867DD00B2AE63 = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = 8X5QXMNH53;
 					};
 					98FEF4421A5867DD00B2AE63 = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -338,6 +342,7 @@
 				98625C311A5F43CD0021B929 /* signUpLogin.png in Resources */,
 				98FEF4391A5867DD00B2AE63 /* Main.storyboard in Resources */,
 				98F1980D1A58BF7100869846 /* circle.png in Resources */,
+				986B87621A75A5B0001EA102 /* sky1.jpg in Resources */,
 				98FEF43E1A5867DD00B2AE63 /* LaunchScreen.xib in Resources */,
 				98625C3E1A5F5E1E0021B929 /* haikei.png in Resources */,
 				98625C471A5F76A60021B929 /* userBack2.png in Resources */,
