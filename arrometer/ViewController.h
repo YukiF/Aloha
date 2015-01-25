@@ -54,7 +54,7 @@
     float myLatitude;
     float myLongitude;
     
-    //sample東京タワーの緯度経度
+    //sampleの緯度経度
     float targetLatitude;
     float targetLongitude;
     

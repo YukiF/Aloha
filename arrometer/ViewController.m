@@ -227,7 +227,8 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
      自分が向いている方向を0度として考える事が出来ます。
      */
     //ここが怪しい
-    arrowPic.transform = CGAffineTransformMakeRotation((targetAzimuth + 180) * M_PI/180);
+    arrowPic.transform = CGAffineTransformMakeRotation((360-(targetAzimuth + 180)) * M_PI/180);
+    
     if (targetAzimuth <= 15 || targetAzimuth >= 345) {
         arrowPicNew.alpha = 1.0;
     }else{
@@ -356,8 +357,9 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
                          }
          ];
         
-        targetLatitude = 35.658625;
-        targetLongitude = 139.745415;
+        //16thbartstation
+        targetLatitude = 37.764799;
+        targetLongitude =  -122.419981;
         
         // 経緯・緯度からCLLocationを作成
         CLLocation *A = [[CLLocation alloc] initWithLatitude:targetLatitude longitude:targetLongitude];
