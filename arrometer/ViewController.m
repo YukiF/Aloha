@@ -129,6 +129,11 @@
     arrowPicNew.transform = CGAffineTransformMakeRotation(180 * M_PI/180);
     [filterView addSubview:arrowPicNew];
     arrowPicNew.alpha = 0.0;
+    //arrowの音
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"新規録音" ofType:@"wav"];
+    NSURL *url = [NSURL fileURLWithPath:path];
+    AudioServicesCreateSystemSoundID((CFURLRef)CFBridgingRetain(url), &shot);
+
     
     
     //距離を示すラベル
@@ -214,12 +219,12 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
 -(void)locationManager:(CLLocationManager*)manager didUpdateHeading:(CLHeading*)newHeading
 {
     // 方位角を求める
-    double azimuth = CalculateAngle(myLatitude,myLongitude,targetLatitude,targetLongitude);
+    azimuth = CalculateAngle(myLatitude,myLongitude,targetLatitude,targetLongitude);
     
     NSLog(@"azimuth %f",azimuth);
     
     // 現在向いている方位から方位角を引き、今向いている方向から対象物までの角度を算出する
-    double targetAzimuth = newHeading.trueHeading - azimuth;
+    targetAzimuth = newHeading.trueHeading - azimuth;
     
     NSLog(@"targetAzimuth %f",targetAzimuth);
     /*
@@ -230,10 +235,13 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
     arrowPic.transform = CGAffineTransformMakeRotation((360-(targetAzimuth + 180)) * M_PI/180);
     
     if (targetAzimuth <= 15 || targetAzimuth >= 345) {
+        arrowPicNew.center = CGPointMake(rect.size.width/2, rect.size.height/5*3);
         arrowPicNew.alpha = 1.0;
     }else{
         
+        arrowPicNew.center = CGPointMake(rect.size.width/2, rect.size.height/5*3);
         arrowPicNew.alpha = 0.0;
+
         
     }
     
@@ -386,16 +394,23 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
     location1 = [touch locationInView:filterView];
     NSLog(@"x:%f y:%f", location1.x, location1.y);
 
-    }
+}
+
+-(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{
+        touch = [touches anyObject];
+        location2 = [touch locationInView:filterView];
+        NSLog(@"x:%f y:%f", location2.x, location2.y);
+        arrowPicNew.center = CGPointMake(rect.size.width/2, rect.size.height/5*3 + ((location2.y - location1.y)/2));
+}
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
     
     touch = [touches anyObject];
-    location2 = [touch locationInView:filterView];
-    NSLog(@"x:%f y:%f", location2.x, location2.y);
+    location3 = [touch locationInView:filterView];
+    NSLog(@"x:%f y:%f", location3.x, location3.y);
 
-    if (location1.x - 10 <= location2.x && location1.x + 10 >= location2.x && location1.y - 10 <= location2.y && location1.y + 10 >= location2.y) {
+    if (location1.x - 10 <= location3.x && location1.x + 10 >= location3.x && location1.y - 10 <= location3.y && location1.y + 10 >= location3.y) {
         
         // タッチされたときの処理
         if (filterView.alpha == 1.0) {
@@ -406,6 +421,15 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
                              }];
             [locationManager stopUpdatingHeading];
         }
+    }else{
+        
+        AudioServicesPlaySystemSound(shot);
+        [UIView animateWithDuration:2.0f
+                         animations:^{
+                             // アニメーションをする処理
+                             arrowPicNew.center = CGPointMake(rect.size.width/2, -300);
+                         }];
+
     }
     
 }

@@ -22,6 +22,8 @@
 		98625C4E1A5F78790021B929 /* whiteEdge.png in Resources */ = {isa = PBXBuildFile; fileRef = 98625C4D1A5F78790021B929 /* whiteEdge.png */; };
 		98625C501A5F79540021B929 /* whiteWaku.png in Resources */ = {isa = PBXBuildFile; fileRef = 98625C4F1A5F79540021B929 /* whiteWaku.png */; };
 		98625C531A5FA84A0021B929 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98625C521A5FA84A0021B929 /* LoginViewController.m */; };
+		986B875E1A7587D6001EA102 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 986B875D1A7587D6001EA102 /* AudioToolbox.framework */; };
+		986B87601A759370001EA102 /* 新規録音.wav in Resources */ = {isa = PBXBuildFile; fileRef = 986B875F1A759370001EA102 /* 新規録音.wav */; };
 		989C48741A632BA900035BD6 /* userBack6.png in Resources */ = {isa = PBXBuildFile; fileRef = 989C48731A632BA900035BD6 /* userBack6.png */; };
 		98E48AD01A6227310021B014 /* fukidasi.png in Resources */ = {isa = PBXBuildFile; fileRef = 98E48ACF1A6227310021B014 /* fukidasi.png */; };
 		98E48AD31A622ED00021B014 /* OptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E48AD21A622ED00021B014 /* OptionViewController.m */; };
@@ -49,7 +51,6 @@
 
 /* Begin PBXFileReference section */
 		982F2E231A5B7AD20067F7E2 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
-		982F2E251A5B7B090067F7E2 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		982F2E271A5B7B130067F7E2 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		982F2E291A5B7B2D0067F7E2 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		982F2E2B1A5B7B390067F7E2 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -77,6 +78,8 @@
 		98625C4F1A5F79540021B929 /* whiteWaku.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteWaku.png; sourceTree = "<group>"; };
 		98625C511A5FA84A0021B929 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = ../LoginViewController.h; sourceTree = "<group>"; };
 		98625C521A5FA84A0021B929 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginViewController.m; path = ../LoginViewController.m; sourceTree = "<group>"; };
+		986B875D1A7587D6001EA102 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		986B875F1A759370001EA102 /* 新規録音.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "新規録音.wav"; sourceTree = "<group>"; };
 		989C48731A632BA900035BD6 /* userBack6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = userBack6.png; sourceTree = "<group>"; };
 		98E48ACF1A6227310021B014 /* fukidasi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fukidasi.png; sourceTree = "<group>"; };
 		98E48AD11A622ED00021B014 /* OptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OptionViewController.h; path = ../OptionViewController.h; sourceTree = "<group>"; };
@@ -104,6 +107,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				986B875E1A7587D6001EA102 /* AudioToolbox.framework in Frameworks */,
 				982F2E371A5B7BE40067F7E2 /* CoreLocation.framework in Frameworks */,
 				982F2E341A5B7B6B0067F7E2 /* QuartzCore.framework in Frameworks */,
 			);
@@ -122,6 +126,7 @@
 		982F2E351A5B7B730067F7E2 /* frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				986B875D1A7587D6001EA102 /* AudioToolbox.framework */,
 				982F2E3E1A5B7DA90067F7E2 /* Bolts.framework */,
 				982F2E3C1A5B7C440067F7E2 /* libz.dylib */,
 				982F2E3A1A5B7C370067F7E2 /* libsqlite3.dylib */,
@@ -132,7 +137,6 @@
 				982F2E2B1A5B7B390067F7E2 /* MobileCoreServices.framework */,
 				982F2E291A5B7B2D0067F7E2 /* SystemConfiguration.framework */,
 				982F2E271A5B7B130067F7E2 /* CFNetwork.framework */,
-				982F2E251A5B7B090067F7E2 /* AudioToolbox.framework */,
 				982F2E231A5B7AD20067F7E2 /* Parse.framework */,
 				982F2E331A5B7B6B0067F7E2 /* QuartzCore.framework */,
 			);
@@ -200,6 +204,7 @@
 				98E48ACE1A6226EF0021B014 /* SULIVCds */,
 				98F197FB1A58B6EE00869846 /* VCds */,
 				98FEF42E1A5867DD00B2AE63 /* AppDelegate.h */,
+				986B875F1A759370001EA102 /* 新規録音.wav */,
 				98FEF42F1A5867DD00B2AE63 /* AppDelegate.m */,
 				98FEF4371A5867DD00B2AE63 /* Main.storyboard */,
 				98625C3A1A5F5C190021B929 /* firstViewController.h */,
@@ -340,6 +345,7 @@
 				98625C481A5F76A60021B929 /* userBack3.png in Resources */,
 				98625C491A5F76A60021B929 /* userBack4.png in Resources */,
 				98625C4C1A5F76A60021B929 /* userBack7.png in Resources */,
+				986B87601A759370001EA102 /* 新規録音.wav in Resources */,
 				98FEF43B1A5867DD00B2AE63 /* Images.xcassets in Resources */,
 				98F1980C1A58BF7100869846 /* arrow.png in Resources */,
 				98625C461A5F76A60021B929 /* userBack1.png in Resources */,
