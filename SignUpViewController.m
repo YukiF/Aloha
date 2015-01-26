@@ -163,6 +163,8 @@
         
     }else{
         
+        [self post];
+        
 //        //Signing up
 //        user = [PFUser user];
 //        user.username = userName.text;
@@ -185,37 +187,41 @@
 
 - (void)post
 {
-//    //NSLog(@"呼び出されてます！");
-//    // RailsにHTTPリクエストを送信する
-//    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://spare.herokuapp.com/api/%d",minutes]];
-//    NSURLRequest *req = [NSURLRequest requestWithURL:url];
-//    
-//    //URLからJSONデータを取得(NSData)
-//    NSError *error;
-//    NSData *events= [NSURLConnection sendSynchronousRequest:req returningResponse:nil error:&error];
-//    if (!error) {
-//        // データが取得で来たら、JSONに変換してプロパティに追加
-//        id json = [NSJSONSerialization JSONObjectWithData:events options:NSJSONReadingMutableContainers error:nil];
-//        _events = [[NSMutableArray alloc] init];
-//        for (id data in json) {
-//            NSMutableDictionary *eventList = [NSMutableDictionary dictionary];
-//            eventList[@"goal"] = data[@"goal"];
-//            eventList[@"url"] = data[@"url"];
-//            [_events addObject:eventList];
-//            
-//            goal = eventList[@"goal"];
-//            urlST = eventList[@"url"];
-//        }
-//    } else {
-//        //アラートを表示させる為のコード
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"エラー"
-//                                                        message:@"ネットに接続できません"
-//                                                       delegate:nil
-//                                              cancelButtonTitle:nil
-//                                              otherButtonTitles:@"OK", nil];
-//        [alert show];
-//    }
-//    
+    // 送信したいURLを作成する
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://hidden-atoll-8201.herokuapp.com/api/v1/members/"]];
+    // Mutableなインスタンスを作成し、インスタンスの内容を変更できるようにする
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
+    // MethodにPOSTを指定する。
+    request.HTTPMethod = @"POST";    //URLからJSONデータを取得(NSData)
+    
+    // 送付したい内容を、key1=value1&key2=value2・・・という形の
+    // 文字列として作成する
+    NSString *name = userName.text;
+    NSString *password = pass.text;
+    NSString *body = [NSString stringWithFormat:@"name=%@&password=%@&service=reader", name, password];
+    
+    // HTTPBodyには、NSData型で設定する
+    request.HTTPBody = [body dataUsingEncoding:NSUTF8StringEncoding];
+    
+    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    
+    
+    
+    NSError *error;
+    if (!error) {
+        //success
+        ViewController *ViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"VC"];
+        [self presentViewController:ViewController animated:YES completion:nil];
+    } else {
+        //アラートを表示させる為のコード
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"エラー"
+                                                        message:@"ネットに接続できません"
+                                                       delegate:nil
+                                              cancelButtonTitle:nil
+                                              otherButtonTitles:@"OK", nil];
+        [alert show];
+    }
+    
 }
 
 
