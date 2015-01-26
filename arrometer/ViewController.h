@@ -11,6 +11,8 @@
 #import "SignUpViewController.h"
 #import <CoreLocation/CoreLocation.h>
 #import <AudioToolbox/AudioToolbox.h>
+#import <QuartzCore/QuartzCore.h>
+
 
 @interface ViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,UIScrollViewDelegate,CLLocationManagerDelegate>{
     
@@ -21,7 +23,6 @@
     
     //友達の名前の配列
     NSMutableArray *friends;
-    
 
     //画面サイズの取得
     UIScreen *sc;
@@ -33,6 +34,9 @@
     UIView * filterView;
     
     UIButton *fukidasi;
+    
+    //バックグラウンドを画像に設定
+    UIImageView *myView;
     
     //ユーザー追加するためのテキストフィールド
     UITextField *addUser;
@@ -46,7 +50,6 @@
     //連続で押せないように
     int shotJudge;
 
-
     //タッチされた場所の判定
     UITouch *touch;
     //タッチした位置
@@ -55,8 +58,6 @@
     CGPoint location2;
     //タッチが終わった位置
     CGPoint location3;
-
-    
 
     //GPS用
     CLLocationManager *locationManager;
@@ -71,7 +72,6 @@
     double azimuth;
     // 現在向いている方位から方位角を引き、今向いている方向から対象物までの角度を算出する
     double targetAzimuth;
-    
     
     //距離を示すラベル
     UILabel *meterLabel;

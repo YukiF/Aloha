@@ -233,9 +233,36 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
     //ここが怪しい
     arrowPic.transform = CGAffineTransformMakeRotation((360-(targetAzimuth + 180)) * M_PI/180);
     
+    NSLog(@"%@",NSStringFromCGRect(arrowPic.frame));
     
+    if(targetAzimuth <= 15 || targetAzimuth >= 345) {
+        
+        //ここにコンパスがぴくぴくするアニメーションをいれたい
+//        [self blinkImage:arrowPic];
+        
+    }
 }
-
+//
+//- (void)blinkImage:(UIImageView *)target {
+//    // 拡大縮小を設定
+//    
+//    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
+//    
+//    // アニメーションのオプションを設定
+//    
+//    animation.duration = 0.5; // アニメーション速度
+//
+//    animation.repeatCount = 1; // 繰り返し回数
+//
+////    animation.autoreverses = YES; // アニメーション終了時に逆アニメーション
+//    
+//    // 拡大・縮小倍率を設定
+//    animation.fromValue = [NSNumber numberWithFloat:1.0]; // 開始時の倍率
+//    animation.toValue = [NSNumber numberWithFloat:1.125]; // 終了時の倍率
+//    // アニメーションを追加
+//    [target.layer addAnimation:animation forKey:@"scale-layer"];
+//}
+//
 
 
 #pragma mark -- テーブルビューに必要なメソッド
@@ -263,11 +290,13 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
     
     /* -- cellに直接ラベルを載せれないので、UIViewを1クッション置く。 -- */
     //UIViewクラスのmyViewを生成
-    UIView * myView = [[UIView alloc] init];
-    
-    //myViewの位置と大きさの指定
+//    UIView * myView = [[UIView alloc] init];
+    UIImage *skyView = [UIImage imageNamed:@"sky1.jpg"];
+    myView = [[UIImageView alloc]initWithImage:skyView];
     myView.frame = CGRectMake(0, 0, rect.size.width, rect.size.height/6.4);
-    myView.backgroundColor = [UIColor colorWithRed:0.08235 green:0.57647 blue:0.78039 alpha:1.0];
+
+//    myView.frame = CGRectMake(0, 0, rect.size.width, rect.size.height/6.4);
+//    myView.backgroundColor = [UIColor colorWithRed:0.08235 green:0.57647 blue:0.78039 alpha:1.0];
     //myViewをcellに表示
     [cell.contentView addSubview:myView];
     
@@ -525,6 +554,7 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
                                              selector:@selector(keyboardWillBeHidden:)
                                                  name:UIKeyboardWillHideNotification object:nil];
 }
+
 - (void)keyboardWasShown:(NSNotification*)aNotification
 {
     // キーボードの表示開始時の場所と大きさを取得します。
