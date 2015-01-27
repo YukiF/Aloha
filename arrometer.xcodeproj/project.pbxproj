@@ -25,6 +25,7 @@
 		986B875E1A7587D6001EA102 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 986B875D1A7587D6001EA102 /* AudioToolbox.framework */; };
 		986B87601A759370001EA102 /* 新規録音.wav in Resources */ = {isa = PBXBuildFile; fileRef = 986B875F1A759370001EA102 /* 新規録音.wav */; };
 		986B87621A75A5B0001EA102 /* sky1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 986B87611A75A5B0001EA102 /* sky1.jpg */; };
+		986B87641A77558E001EA102 /* arrowLight.png in Resources */ = {isa = PBXBuildFile; fileRef = 986B87631A77558E001EA102 /* arrowLight.png */; };
 		989C48741A632BA900035BD6 /* userBack6.png in Resources */ = {isa = PBXBuildFile; fileRef = 989C48731A632BA900035BD6 /* userBack6.png */; };
 		98E48AD01A6227310021B014 /* fukidasi.png in Resources */ = {isa = PBXBuildFile; fileRef = 98E48ACF1A6227310021B014 /* fukidasi.png */; };
 		98E48AD31A622ED00021B014 /* OptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E48AD21A622ED00021B014 /* OptionViewController.m */; };
@@ -82,6 +83,7 @@
 		986B875D1A7587D6001EA102 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		986B875F1A759370001EA102 /* 新規録音.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "新規録音.wav"; sourceTree = "<group>"; };
 		986B87611A75A5B0001EA102 /* sky1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky1.jpg; sourceTree = "<group>"; };
+		986B87631A77558E001EA102 /* arrowLight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowLight.png; sourceTree = "<group>"; };
 		989C48731A632BA900035BD6 /* userBack6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = userBack6.png; sourceTree = "<group>"; };
 		98E48ACF1A6227310021B014 /* fukidasi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fukidasi.png; sourceTree = "<group>"; };
 		98E48AD11A622ED00021B014 /* OptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OptionViewController.h; path = ../OptionViewController.h; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 		98F197FB1A58B6EE00869846 /* VCds */ = {
 			isa = PBXGroup;
 			children = (
+				986B87631A77558E001EA102 /* arrowLight.png */,
 				986B87611A75A5B0001EA102 /* sky1.jpg */,
 				98E48ACF1A6227310021B014 /* fukidasi.png */,
 				98625C3F1A5F76A60021B929 /* userBack1.png */,
@@ -343,6 +346,7 @@
 				98FEF4391A5867DD00B2AE63 /* Main.storyboard in Resources */,
 				98F1980D1A58BF7100869846 /* circle.png in Resources */,
 				986B87621A75A5B0001EA102 /* sky1.jpg in Resources */,
+				986B87641A77558E001EA102 /* arrowLight.png in Resources */,
 				98FEF43E1A5867DD00B2AE63 /* LaunchScreen.xib in Resources */,
 				98625C3E1A5F5E1E0021B929 /* haikei.png in Resources */,
 				98625C471A5F76A60021B929 /* userBack2.png in Resources */,

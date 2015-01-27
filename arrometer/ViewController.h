@@ -41,16 +41,16 @@
     //ユーザー追加するためのテキストフィールド
     UITextField *addUser;
     
-    //コンパス用
     UIImageView *arrowPic;
-    //アローの背景
+    UIImageView *arrowLight;
     UIImageView *sky;
-    //効果音
     SystemSoundID shot;
     //連続で押せないように
     int shotJudge;
     //ぷるぷるjadge判定
-    int animationJudge;
+    int pullJudge;
+    //光判定
+    int lightJudge;
 
     //タッチされた場所の判定
     UITouch *touch;

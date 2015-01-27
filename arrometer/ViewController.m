@@ -130,6 +130,13 @@
     sky.alpha = 0.0;
     [filterView addSubview:sky];
     
+    //arrow"s back light
+    UIImage *arrowBack = [UIImage imageNamed:@"arrowLight.png"];
+    arrowLight = [[UIImageView alloc]initWithImage:arrowBack];
+    arrowLight.frame = CGRectMake(0,0,rect.size.width/6*1.15,rect.size.width/2*1.15);
+    arrowLight.center = CGPointMake(rect.size.width/2, rect.size.height/5*3 - rect.size.width/6*0.1);
+    [filterView addSubview:arrowLight];
+    arrowLight.alpha = 0.0;
     //arrowの表示
     UIImage *arrow = [UIImage imageNamed:@"arrow.png"];
     arrowPic = [[UIImageView alloc]initWithImage:arrow];
@@ -142,7 +149,9 @@
     NSURL *url = [NSURL fileURLWithPath:path];
     AudioServicesCreateSystemSoundID((CFURLRef)CFBridgingRetain(url), &shot);
     shotJudge = 0;
-    animationJudge = 0;
+    pullJudge = 0;
+    lightJudge = 0;
+
 
     
     filterView.alpha = 0.0;
@@ -233,16 +242,37 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
      */
     //ここが怪しい
     arrowPic.transform = CGAffineTransformMakeRotation((360-(targetAzimuth + 180)) * M_PI/180);
+    arrowLight.transform = CGAffineTransformMakeRotation((360-(targetAzimuth)) * M_PI/180);
     
     NSLog(@"%@",NSStringFromCGRect(arrowPic.frame));
     
     if(targetAzimuth <= 15 || targetAzimuth >= 345) {
         
-        //ここにコンパスがぴくぴくするアニメーションをいれたい
-        
-    }
+        if (lightJudge == 0) {
+            //ここにコンパスのアニメーションをいれたい
+//            [self arrowLightAnimation];
+            [self blinkImage:arrowLight];
+            arrowLight.alpha = 1.0;
+            lightJudge = 1;
+        }
+    }else{
+        lightJudge = 0;
+        arrowLight.alpha = 0.0;
+        [arrowLight.layer removeAllAnimations];
+}
 }
 
+//arrow light animation
+- (void)blinkImage:(UIImageView *)target {
+    CABasicAnimation* animation = [CABasicAnimation animationWithKeyPath:@"opacity"];
+    animation.duration = 0.01f;
+    animation.autoreverses = YES;
+    //animation.repeatCount =
+    animation.repeatCount = HUGE_VAL; //infinite loop -> HUGE_VAL
+    animation.fromValue = [NSNumber numberWithFloat:1.0f]; //MAX opacity
+    animation.toValue = [NSNumber numberWithFloat:0.0f]; //MIN opacity
+    [target.layer addAnimation:animation forKey:@"blink"];
+}
 
 #pragma mark -- テーブルビューに必要なメソッド
 //セルにIDをつけるのは、どのセルを再利用して再度表示したいのかを教えるため
@@ -392,6 +422,8 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
     
     
     if (targetAzimuth <= 15 || targetAzimuth >= 345) {
+        arrowLight.alpha = 0.0;
+        [arrowLight.layer removeAllAnimations];
         if (shotJudge == 0) {
             touch = [touches anyObject];
             location2 = [touch locationInView:filterView];
@@ -401,12 +433,12 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
             arrowPic.transform = CGAffineTransformMakeRotation(180 * M_PI/180);
 //            NSLog(@"アローの場所は%@",NSStringFromCGPoint(arrowPic.center));
             if(((location2.y - location1.y)/2) >= rect.size.width * 0.2){
-                if (animationJudge == 0) {
-                    [self arrowAnimationStart];
-                    animationJudge = 1;
+                if ( pullJudge == 0) {
+                    [self arrowPullAnimation];
+                     pullJudge = 1;
                 }
             }else{
-                animationJudge = 0;
+                 pullJudge = 0;
                 [arrowPic.layer removeAllAnimations];
             }
 
@@ -414,7 +446,7 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
     }
 }
 
--(void)arrowAnimationStart
+-(void)arrowPullAnimation
 {
     NSLog(@"アニメーション呼ばれた！");
     //http://do-gugan.com/~furuta/archives/2011/10/post_341.html
@@ -426,19 +458,7 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
                          arrowPic.center = CGPointMake(arrowPic.center.x - rect.size.width * 0.012, arrowPic.center.y);
                      }
                      completion:^(BOOL finished) {
-                         [UIView animateWithDuration:.05 animations:^(void) {
                              arrowPic.center = CGPointMake(arrowPic.center.x + rect.size.width * 0.012, arrowPic.center.y);
-                         }
-                                          completion:^(BOOL finished) {
-                                              [UIView animateWithDuration:.05 animations:^(void) {
-                                                  arrowPic.center = CGPointMake(arrowPic.center.x - rect.size.width * 0.012, arrowPic.center.y);
-                                              }
-                                                               completion:^(BOOL finish) {
-                                                                   [UIView animateWithDuration:.05 animations:^(void) {
-                                                                       arrowPic.center = CGPointMake(arrowPic.center.x + rect.size.width * 0.012, arrowPic.center.y);
-                                                                   }];
-                                                               }];
-                                          }];
                      }];
 
 }
@@ -470,6 +490,9 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
                     arrowPic.center = CGPointMake(rect.size.width/2,arrowPic.center.y);
                     sky.alpha = 1.0;
                     [arrowPic.layer removeAllAnimations];
+                    [arrowLight.layer removeAllAnimations];
+                    //touch event unavailable
+                    [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
                     AudioServicesPlaySystemSound(shot);
                     [UIView animateWithDuration:1.5f
                                      animations:^{
@@ -481,8 +504,11 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
                                          // アニメーションが終わった後実行する処理
                                          arrowPic.center = CGPointMake(rect.size.width/2,rect.size.height/5*3);
                                          shotJudge = 0;
+                                         lightJudge = 0;
                                          sky.alpha = 0.0;
                                          sky.frame = CGRectMake(0,-344,1920,1080);
+                                         //touch event available
+                                         [[UIApplication sharedApplication] endIgnoringInteractionEvents];
                                          [locationManager startUpdatingHeading]; // コンパスの向きを取得
                                      }];
                     
