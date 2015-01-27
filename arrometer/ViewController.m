@@ -142,6 +142,7 @@
     NSURL *url = [NSURL fileURLWithPath:path];
     AudioServicesCreateSystemSoundID((CFURLRef)CFBridgingRetain(url), &shot);
     shotJudge = 0;
+    animationJudge = 0;
 
     
     filterView.alpha = 0.0;
@@ -152,7 +153,7 @@
     // キーボードが表示されたときのNotificationをうけとります。（後で）
     [self registerForKeyboardNotifications];
 
-   
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -238,31 +239,9 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
     if(targetAzimuth <= 15 || targetAzimuth >= 345) {
         
         //ここにコンパスがぴくぴくするアニメーションをいれたい
-//        [self blinkImage:arrowPic];
         
     }
 }
-//
-//- (void)blinkImage:(UIImageView *)target {
-//    // 拡大縮小を設定
-//    
-//    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
-//    
-//    // アニメーションのオプションを設定
-//    
-//    animation.duration = 0.5; // アニメーション速度
-//
-//    animation.repeatCount = 1; // 繰り返し回数
-//
-////    animation.autoreverses = YES; // アニメーション終了時に逆アニメーション
-//    
-//    // 拡大・縮小倍率を設定
-//    animation.fromValue = [NSNumber numberWithFloat:1.0]; // 開始時の倍率
-//    animation.toValue = [NSNumber numberWithFloat:1.125]; // 終了時の倍率
-//    // アニメーションを追加
-//    [target.layer addAnimation:animation forKey:@"scale-layer"];
-//}
-//
 
 
 #pragma mark -- テーブルビューに必要なメソッド
@@ -357,8 +336,6 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
         addUser.font = [ UIFont fontWithName:@"AvenirNext-UltraLight" size:rect.size.height/16];
         addUser.textColor = [UIColor whiteColor];
         addUser.delegate = self;
-
-
         [myView addSubview:addUser];
 
 
@@ -399,8 +376,6 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
         //viewDidLoadにあるから多分いらない
 //        [locationManager startUpdatingLocation]; // 現在位置を取得する
         [locationManager startUpdatingHeading]; // コンパスの向きを取得
-
-
     }
 }
 
@@ -409,23 +384,63 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
     // シングルタッチの場合
     touch = [touches anyObject];
     location1 = [touch locationInView:filterView];
-    NSLog(@"x:%f y:%f", location1.x, location1.y);
+//    NSLog(@"x:%f y:%f", location1.x, location1.y);
 
 }
 
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{
     
+    
     if (targetAzimuth <= 15 || targetAzimuth >= 345) {
         if (shotJudge == 0) {
             touch = [touches anyObject];
             location2 = [touch locationInView:filterView];
-            NSLog(@"x:%f y:%f", location2.x, location2.y);
+//            NSLog(@"x:%f y:%f", location2.x, location2.y);
             [locationManager stopUpdatingHeading];
             arrowPic.center = CGPointMake(rect.size.width/2, rect.size.height/5*3 + ((location2.y - location1.y)/2));
             arrowPic.transform = CGAffineTransformMakeRotation(180 * M_PI/180);
+//            NSLog(@"アローの場所は%@",NSStringFromCGPoint(arrowPic.center));
+            if(((location2.y - location1.y)/2) >= rect.size.width * 0.2){
+                if (animationJudge == 0) {
+                    [self arrowAnimationStart];
+                    animationJudge = 1;
+                }
+            }else{
+                animationJudge = 0;
+                [arrowPic.layer removeAllAnimations];
+            }
 
         }
     }
+}
+
+-(void)arrowAnimationStart
+{
+    NSLog(@"アニメーション呼ばれた！");
+    //http://do-gugan.com/~furuta/archives/2011/10/post_341.html
+    [UIView setAnimationRepeatAutoreverses:TRUE]; //最初の位置に戻る
+       [UIView animateWithDuration:.05
+                             delay:0.01
+                           options:UIViewAnimationOptionRepeat
+                     animations:^(void) {
+                         arrowPic.center = CGPointMake(arrowPic.center.x - rect.size.width * 0.012, arrowPic.center.y);
+                     }
+                     completion:^(BOOL finished) {
+                         [UIView animateWithDuration:.05 animations:^(void) {
+                             arrowPic.center = CGPointMake(arrowPic.center.x + rect.size.width * 0.012, arrowPic.center.y);
+                         }
+                                          completion:^(BOOL finished) {
+                                              [UIView animateWithDuration:.05 animations:^(void) {
+                                                  arrowPic.center = CGPointMake(arrowPic.center.x - rect.size.width * 0.012, arrowPic.center.y);
+                                              }
+                                                               completion:^(BOOL finish) {
+                                                                   [UIView animateWithDuration:.05 animations:^(void) {
+                                                                       arrowPic.center = CGPointMake(arrowPic.center.x + rect.size.width * 0.012, arrowPic.center.y);
+                                                                   }];
+                                                               }];
+                                          }];
+                     }];
+
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
@@ -448,27 +463,42 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
         }
     }else{
         if (targetAzimuth <= 15 || targetAzimuth >= 345) {
-        
-            if (shotJudge == 0) {
-                shotJudge = 1;
-                sky.alpha = 1.0;
-                AudioServicesPlaySystemSound(shot);
-                arrowPic.transform = CGAffineTransformMakeRotation(180 * M_PI/180);
-                [UIView animateWithDuration:1.5f
+            if (((location2.y - location1.y)/2) >= rect.size.width * 0.2) {
+                if (shotJudge == 0) {
+                    shotJudge = 1;
+                    arrowPic.transform = CGAffineTransformMakeRotation(180 * M_PI/180);
+                    arrowPic.center = CGPointMake(rect.size.width/2,arrowPic.center.y);
+                    sky.alpha = 1.0;
+                    [arrowPic.layer removeAllAnimations];
+                    AudioServicesPlaySystemSound(shot);
+                    [UIView animateWithDuration:1.5f
+                                     animations:^{
+                                         // アニメーションをする処理
+                                         arrowPic.center = CGPointMake(rect.size.width/2,-300);
+                                         sky.frame = CGRectMake(0,0,1920,1080);
+                                     }
+                                     completion:^(BOOL finished){
+                                         // アニメーションが終わった後実行する処理
+                                         arrowPic.center = CGPointMake(rect.size.width/2,rect.size.height/5*3);
+                                         shotJudge = 0;
+                                         sky.alpha = 0.0;
+                                         sky.frame = CGRectMake(0,-344,1920,1080);
+                                         [locationManager startUpdatingHeading]; // コンパスの向きを取得
+                                     }];
+                    
+                }
+            }else{
+                [UIView animateWithDuration:0.3f
                                  animations:^{
                                      // アニメーションをする処理
-                                     arrowPic.center = CGPointMake(rect.size.width/2,-300);
-                                     sky.frame = CGRectMake(0,0,1920,1080);
+                                     arrowPic.center = CGPointMake(rect.size.width/2, rect.size.height/5*3);
                                  }
                                  completion:^(BOOL finished){
                                      // アニメーションが終わった後実行する処理
-                                     arrowPic.center = CGPointMake(rect.size.width/2, rect.size.height/5*3);
-                                     shotJudge = 0;
-                                     sky.alpha = 0.0;
-                                     sky.frame = CGRectMake(0,-344,1920,1080);
                                      [locationManager startUpdatingHeading]; // コンパスの向きを取得
                                  }];
             }
+            
         }
     }
 }

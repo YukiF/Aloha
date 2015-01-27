@@ -49,6 +49,8 @@
     SystemSoundID shot;
     //連続で押せないように
     int shotJudge;
+    //ぷるぷるjadge判定
+    int animationJudge;
 
     //タッチされた場所の判定
     UITouch *touch;
