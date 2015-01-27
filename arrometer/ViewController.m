@@ -407,6 +407,8 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
         //viewDidLoadにあるから多分いらない
 //        [locationManager startUpdatingLocation]; // 現在位置を取得する
         [locationManager startUpdatingHeading]; // コンパスの向きを取得
+        NSLog(@"コンパス呼ばれてる");
+
     }else{
         
         table.userInteractionEnabled = NO;
@@ -417,37 +419,39 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    // シングルタッチの場合
-    touch = [touches anyObject];
-    location1 = [touch locationInView:filterView];
-//    NSLog(@"x:%f y:%f", location1.x, location1.y);
-
-
+    if (filterView.alpha == 1.0) {
+        // シングルタッチの場合
+        touch = [touches anyObject];
+        location1 = [touch locationInView:filterView];
+        //    NSLog(@"x:%f y:%f", location1.x, location1.y);
+    }
 }
 
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{
-    
-    if (targetAzimuth <= 15 || targetAzimuth >= 345) {
-        arrowLight.alpha = 0.0;
-        [arrowLight.layer removeAllAnimations];
-        if (shotJudge == 0) {
-            touch = [touches anyObject];
-            location2 = [touch locationInView:filterView];
-//            NSLog(@"x:%f y:%f", location2.x, location2.y);
-            [locationManager stopUpdatingHeading];
-            arrowPic.center = CGPointMake(rect.size.width/2, rect.size.height/5*3 + ((location2.y - location1.y)/2));
-            arrowPic.transform = CGAffineTransformMakeRotation(180 * M_PI/180);
-//            NSLog(@"アローの場所は%@",NSStringFromCGPoint(arrowPic.center));
-            if(((location2.y - location1.y)/2) >= rect.size.width * 0.2){
-                if ( pullJudge == 0) {
-                    [self arrowPullAnimation];
-                     pullJudge = 1;
+    if (filterView.alpha == 1.0) {
+        
+        if (targetAzimuth <= 15 || targetAzimuth >= 345) {
+            arrowLight.alpha = 0.0;
+            [arrowLight.layer removeAllAnimations];
+            if (shotJudge == 0) {
+                touch = [touches anyObject];
+                location2 = [touch locationInView:filterView];
+                //            NSLog(@"x:%f y:%f", location2.x, location2.y);
+                [locationManager stopUpdatingHeading];
+                arrowPic.center = CGPointMake(rect.size.width/2, rect.size.height/5*3 + ((location2.y - location1.y)/2));
+                arrowPic.transform = CGAffineTransformMakeRotation(180 * M_PI/180);
+                //            NSLog(@"アローの場所は%@",NSStringFromCGPoint(arrowPic.center));
+                if(((location2.y - location1.y)/2) >= rect.size.width * 0.2){
+                    if ( pullJudge == 0) {
+                        [self arrowPullAnimation];
+                        pullJudge = 1;
+                    }
+                }else{
+                    pullJudge = 0;
+                    [arrowPic.layer removeAllAnimations];
                 }
-            }else{
-                 pullJudge = 0;
-                [arrowPic.layer removeAllAnimations];
+                
             }
-
         }
     }
 }
@@ -471,66 +475,69 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    
-    touch = [touches anyObject];
-    location3 = [touch locationInView:filterView];
-    NSLog(@"x:%f y:%f", location3.x, location3.y);
-
-    if (location1.x - 10 <= location3.x && location1.x + 10 >= location3.x && location1.y - 10 <= location3.y && location1.y + 10 >= location3.y) {
+    if (filterView.alpha == 1.0) {
         
-        // タッチされたときの処理
-        if (filterView.alpha == 1.0) {
-            [UIView animateWithDuration:0.5f
-                             animations:^{
-                                 // アニメーションをする処理
-                                 filterView.alpha = 0.0;
-                             }];
-            [locationManager stopUpdatingHeading];
-        }
-    }else{
-        if (targetAzimuth <= 15 || targetAzimuth >= 345) {
-            if (((location2.y - location1.y)/2) >= rect.size.width * 0.2) {
-                if (shotJudge == 0) {
-                    shotJudge = 1;
-                    arrowPic.transform = CGAffineTransformMakeRotation(180 * M_PI/180);
-                    arrowPic.center = CGPointMake(rect.size.width/2,arrowPic.center.y);
-                    sky.alpha = 1.0;
-                    [arrowPic.layer removeAllAnimations];
-                    [arrowLight.layer removeAllAnimations];
-                    //touch event unavailable
-                    [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
-                    AudioServicesPlaySystemSound(shot);
-                    [UIView animateWithDuration:1.5f
+        
+        touch = [touches anyObject];
+        location3 = [touch locationInView:filterView];
+        NSLog(@"x:%f y:%f", location3.x, location3.y);
+        
+        if (location1.x - 10 <= location3.x && location1.x + 10 >= location3.x && location1.y - 10 <= location3.y && location1.y + 10 >= location3.y) {
+            
+            // タッチされたときの処理
+            if (filterView.alpha == 1.0) {
+                [UIView animateWithDuration:0.5f
+                                 animations:^{
+                                     // アニメーションをする処理
+                                     filterView.alpha = 0.0;
+                                 }];
+                [locationManager stopUpdatingHeading];
+            }
+        }else{
+            if (targetAzimuth <= 15 || targetAzimuth >= 345) {
+                if (((location2.y - location1.y)/2) >= rect.size.width * 0.2) {
+                    if (shotJudge == 0) {
+                        shotJudge = 1;
+                        arrowPic.transform = CGAffineTransformMakeRotation(180 * M_PI/180);
+                        arrowPic.center = CGPointMake(rect.size.width/2,arrowPic.center.y);
+                        sky.alpha = 1.0;
+                        [arrowPic.layer removeAllAnimations];
+                        [arrowLight.layer removeAllAnimations];
+                        //touch event unavailable
+                        [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
+                        AudioServicesPlaySystemSound(shot);
+                        [UIView animateWithDuration:1.5f
+                                         animations:^{
+                                             // アニメーションをする処理
+                                             arrowPic.center = CGPointMake(rect.size.width/2,-300);
+                                             sky.frame = CGRectMake(0,0,1920,1080);
+                                         }
+                                         completion:^(BOOL finished){
+                                             // アニメーションが終わった後実行する処理
+                                             arrowPic.center = CGPointMake(rect.size.width/2,rect.size.height/5*3);
+                                             shotJudge = 0;
+                                             lightJudge = 0;
+                                             sky.alpha = 0.0;
+                                             sky.frame = CGRectMake(0,-344,1920,1080);
+                                             //touch event available
+                                             [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+                                             [locationManager startUpdatingHeading]; // コンパスの向きを取得
+                                         }];
+                        
+                    }
+                }else{
+                    [UIView animateWithDuration:0.3f
                                      animations:^{
                                          // アニメーションをする処理
-                                         arrowPic.center = CGPointMake(rect.size.width/2,-300);
-                                         sky.frame = CGRectMake(0,0,1920,1080);
+                                         arrowPic.center = CGPointMake(rect.size.width/2, rect.size.height/5*3);
                                      }
                                      completion:^(BOOL finished){
                                          // アニメーションが終わった後実行する処理
-                                         arrowPic.center = CGPointMake(rect.size.width/2,rect.size.height/5*3);
-                                         shotJudge = 0;
-                                         lightJudge = 0;
-                                         sky.alpha = 0.0;
-                                         sky.frame = CGRectMake(0,-344,1920,1080);
-                                         //touch event available
-                                         [[UIApplication sharedApplication] endIgnoringInteractionEvents];
                                          [locationManager startUpdatingHeading]; // コンパスの向きを取得
                                      }];
-                    
                 }
-            }else{
-                [UIView animateWithDuration:0.3f
-                                 animations:^{
-                                     // アニメーションをする処理
-                                     arrowPic.center = CGPointMake(rect.size.width/2, rect.size.height/5*3);
-                                 }
-                                 completion:^(BOOL finished){
-                                     // アニメーションが終わった後実行する処理
-                                     [locationManager startUpdatingHeading]; // コンパスの向きを取得
-                                 }];
+                
             }
-            
         }
     }
 }
