@@ -158,10 +158,10 @@
     
     cellNum = (int)[friends count] + 1;
     
-    
+       
     // キーボードが表示されたときのNotificationをうけとります。（後で）
     [self registerForKeyboardNotifications];
-
+    
 
 }
 
@@ -365,6 +365,7 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
         addUser.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"+" attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor] ,}];
         addUser.font = [ UIFont fontWithName:@"AvenirNext-UltraLight" size:rect.size.height/16];
         addUser.textColor = [UIColor whiteColor];
+        addUser.returnKeyType = UIReturnKeyJoin;
         addUser.delegate = self;
         [myView addSubview:addUser];
 
@@ -406,6 +407,11 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
         //viewDidLoadにあるから多分いらない
 //        [locationManager startUpdatingLocation]; // 現在位置を取得する
         [locationManager startUpdatingHeading]; // コンパスの向きを取得
+    }else{
+        
+        table.userInteractionEnabled = NO;
+        [addUser becomeFirstResponder];
+        
     }
 }
 
@@ -416,10 +422,10 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
     location1 = [touch locationInView:filterView];
 //    NSLog(@"x:%f y:%f", location1.x, location1.y);
 
+
 }
 
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{
-    
     
     if (targetAzimuth <= 15 || targetAzimuth >= 345) {
         arrowLight.alpha = 0.0;
@@ -539,6 +545,7 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
 -(BOOL)textFieldShouldReturn:(UITextField*)textField{
     
     [addUser resignFirstResponder];
+    table.userInteractionEnabled = YES;
 
 //    //ユーザーが存在するかどうかを確認
 //    PFQuery *pfQuery = [PFQuery queryWithClassName:@"_User"];
