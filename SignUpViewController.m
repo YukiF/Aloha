@@ -145,8 +145,6 @@
         }
     }else return YES;
     
-    
-
 }
 
 
@@ -161,27 +159,15 @@
         [Alert1 show];
 
         
+    }else if([pass.text length] < 4){
+        
+            UIAlertView *Alert = [[UIAlertView alloc]initWithTitle:@"登録できません。" message:@"パスワードは4文字以上入力して下さい。" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+            [Alert show];
+            
     }else{
         
         [self post];
         
-//        //Signing up
-//        user = [PFUser user];
-//        user.username = userName.text;
-//        user.password = pass.text;
-//        [user signUpInBackgroundWithBlock:^(BOOL succeede, NSError *error){
-//            if(!error){
-//                
-//                //success
-//                ViewController *ViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"VC"];
-//                [self presentViewController:ViewController animated:YES completion:nil];
-//                
-//            }else{
-//                
-//                UIAlertView *Alert2 = [[UIAlertView alloc]initWithTitle:@"登録できません。" message:@"名前が重複しています。変更して下さい。" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-//                [Alert2 show];
-//            }
-//        }];
     }
 }
 
