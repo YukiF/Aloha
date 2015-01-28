@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "SignUpViewController.h"
 
+int userId;
+
 @interface firstViewController : UIViewController{
     
     UIButton *signUp;

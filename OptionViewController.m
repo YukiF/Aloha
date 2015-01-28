@@ -60,7 +60,9 @@
     [back setTitleColor:[ UIColor whiteColor ] forState:UIControlStateNormal ];
     [self.view addSubview:back];
 
-
+    NSUserDefaults *userSave = [NSUserDefaults standardUserDefaults];
+    userId = (int)[userSave integerForKey:@"userId"];
+    NSLog(@"%d",userId);
 
 
 }
@@ -82,7 +84,10 @@
 
 -(void)logout:(UIButton*)button{
     
-//    [PFUser logOut];
+    userId = 0;
+    NSUserDefaults *userSave = [NSUserDefaults standardUserDefaults];
+    [userSave setInteger:userId forKey:@"userId"];
+
     ViewController *ViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"FVC"];
     [self presentViewController:ViewController animated:YES completion:nil];
 }

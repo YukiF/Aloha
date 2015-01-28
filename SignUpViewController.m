@@ -191,7 +191,17 @@
     AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager manager];
     NSDictionary* param = @{@"name" : userName.text, @"password" : pass.text};
     [manager POST:@"https://hidden-atoll-8201.herokuapp.com/api/v1/members/" parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
         NSLog(@"response: %@", responseObject);
+        
+        //ユーザーのid番号をいれたい
+        int userId = [responseObject[@"id"] intValue];
+        NSLog(@"ID %d",userId);
+        
+        NSUserDefaults *userSave = [NSUserDefaults standardUserDefaults];
+        [userSave setInteger:userId forKey:@"userId"];
+        
+        
         
         ViewController *ViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"VC"];
         [self presentViewController:ViewController animated:YES completion:nil];

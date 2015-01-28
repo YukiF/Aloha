@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-//#import <Parse/Parse.h>
 #import "SignUpViewController.h"
 #import <CoreLocation/CoreLocation.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import <QuartzCore/QuartzCore.h>
+#import "firstViewController.h"
 
 
 @interface ViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,UIScrollViewDelegate,CLLocationManagerDelegate>{

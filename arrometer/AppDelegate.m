@@ -12,41 +12,33 @@
 
 @end
 
-//#import <Parse/Parse.h>
 
 @implementation AppDelegate
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
+    NSUserDefaults *userSave = [NSUserDefaults standardUserDefaults];
+    userId = (int)[userSave integerForKey:@"userId"];
     
-//    // [Optional] Power your app with Local Datastore. For more info, go to
-//    // https://parse.com/docs/ios_guide#localdatastore/iOS
-//    [Parse enableLocalDatastore];
-//    
-//    // Initialize Parse.
-//    [Parse setApplicationId:@"BRJf7QJ1Ztyxv7YpVlNXYg1uKDCqjMYDLcEaIYHO"
-//                  clientKey:@"Svd8n6OVR2xRyvu2JhHQVXRNDJbotWRjmXqijCyD"];
-//    
-//    // [Optional] Track statistics around application opens.
-//    [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
-//    // Override point for customization after application launch.
-//   
-//    if ([PFUser currentUser]) {
-//        // ログイン済み
-//        UIStoryboard *storyboard1 = [[[self window] rootViewController] storyboard];
-//        UIViewController *ViewController = [storyboard1 instantiateViewControllerWithIdentifier:@"VC"];
-//        self.window.rootViewController = ViewController;
-//        [self.window makeKeyAndVisible];
-//    } else {
-//        // 未ログイン
-//        UIStoryboard *storyboard2 = [[[self window] rootViewController] storyboard];
-//        UIViewController *firstViewController = [storyboard2 instantiateViewControllerWithIdentifier:@"FVC"];
-//        self.window.rootViewController = firstViewController;
-//        [self.window makeKeyAndVisible];
-//    }
-//
-//    
+     if (userId == 0) {
+         
+         // 未ログイン
+         UIStoryboard *storyboard2 = [[[self window] rootViewController] storyboard];
+         UIViewController *firstViewController = [storyboard2 instantiateViewControllerWithIdentifier:@"FVC"];
+         self.window.rootViewController = firstViewController;
+         [self.window makeKeyAndVisible];
+
+        
+    } else {
+        // ログイン済み
+        UIStoryboard *storyboard1 = [[[self window] rootViewController] storyboard];
+        UIViewController *ViewController = [storyboard1 instantiateViewControllerWithIdentifier:@"VC"];
+        self.window.rootViewController = ViewController;
+        [self.window makeKeyAndVisible];
+    }
+
+    
     return YES;
 }
 

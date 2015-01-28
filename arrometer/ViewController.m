@@ -18,6 +18,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
+    NSUserDefaults *userSave = [NSUserDefaults standardUserDefaults];
+    userId = [userSave integerForKey:@"userId"];
+    NSLog(@"%d",userId);
+    
     //ステータスバーが見えていたら消す
     //http://www.dprog.info/ios/xcode5_status_bar_appearance/
     if( [ UIApplication sharedApplication ].isStatusBarHidden == NO ) {
