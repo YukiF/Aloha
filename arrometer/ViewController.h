@@ -44,6 +44,7 @@
     
     //ユーザー追加するためのテキストフィールド
     UITextField *addUser;
+    int addJudge;
     
     UIImageView *arrowPic;
     UIImageView *arrowLight;

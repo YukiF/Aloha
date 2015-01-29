@@ -352,6 +352,8 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
 }
 
 
+
+
 //セルの作り方の設定と、セルの内容を決めるメソッド
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -378,18 +380,59 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
     table.rowHeight = rect.size.height/6.4;
     
     /* -- cellに直接ラベルを載せれないので、UIViewを1クッション置く。 -- */
-    //UIViewクラスのmyViewを生成
-    UIView * myView = [[UIView alloc] init];
-    myView.frame = CGRectMake(0, 0, rect.size.width, rect.size.height/6.4);
-    myView.backgroundColor = [UIColor clearColor];
     
-    //myViewをcellに表示
-    [cell.contentView addSubview:myView];
+//    UIView * backView = [[UIView alloc] init];
+//    backView.frame = CGRectMake(0, 0, rect.size.width, rect.size.height/6.4);
+//    backView.backgroundColor = [UIColor clearColor];
+//    
+//    //backViewをcellに表示
+//    [cell.contentView addSubview:backView];
+//    
+//    if (indexPath.row + 1 < cellNum) {
+//        
+//        UIImage *blockBack = [UIImage imageNamed:@"newUserBack.png"];  // ボタンにする画像を生成する
+//        UIButton *blockBT = [[UIButton alloc]
+//                             initWithFrame:CGRectMake(0,0,rect.size.width,rect.size.height/6.34482759)];
+//        [blockBT setBackgroundImage:blockBack forState:UIControlStateNormal];  // 画像をセットする
+//        // ボタンが押された時にhogeメソッドを呼び出す
+//        [blockBT addTarget:self
+//                action:@selector(block:) forControlEvents:UIControlEventTouchUpInside];
+//        
+//        UILabel *blockLabel = [[UILabel alloc] init];
+//        blockLabel.frame = CGRectMake(160,8,rect.size.width,rect.size.width/4);
+//        blockLabel.center = CGPointMake(rect.size.width/2,rect.size.height/6.34482759/2);
+//        blockLabel.text = @"BLOCK";
+//        blockLabel.font = [UIFont fontWithName:@"PopJoyStd-B" size:rect.size.height/16];
+//        blockLabel.textColor = [UIColor whiteColor];
+//        blockLabel.textAlignment = NSTextAlignmentCenter;
+//        [backView addSubview:blockLabel];
+//        
+//    }else{
+//        
+////        addUser = [[UITextField alloc] initWithFrame:CGRectMake(0,0,rect.size.width,rect.size.height/6.4)];
+////        addUser.textAlignment = NSTextAlignmentCenter;
+////        addUser.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"+" attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor] ,}];
+////        addUser.font = [ UIFont fontWithName:@"PopJoyStd-B" size:rect.size.height/16];
+////        addUser.textColor = [UIColor whiteColor];
+////        addUser.returnKeyType = UIReturnKeyJoin;
+////        addUser.delegate = self;
+////        addUser.keyboardType = UIKeyboardTypeASCIICapable;
+////        [backView addSubview:addUser];
+//    }
+
+    
+    //UIViewクラスのfrontViewを生成
+    UIView * frontView = [[UIView alloc] init];
+    frontView.frame = CGRectMake(0, 0, rect.size.width, rect.size.height/6.4);
+    frontView.backgroundColor = [UIColor clearColor];
+    
+    //frontViewをcellに表示
+    [cell.contentView addSubview:frontView];
     
     UIImage *userBack = [UIImage imageNamed:@"newUserBack.png"];
     UIImageView *userBackPic = [[UIImageView alloc]initWithImage:userBack];
     userBackPic.frame = CGRectMake(0,0,rect.size.width,rect.size.height/6.34482759);
-    [myView addSubview:userBackPic];
+    [frontView addSubview:userBackPic];
     
     if (indexPath.row + 1 < cellNum) {
         //ラベル
@@ -397,12 +440,10 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
         friendLabel.frame = CGRectMake(160,8,rect.size.width,rect.size.width/4);
         friendLabel.center = CGPointMake(rect.size.width/2,rect.size.height/6.34482759/2);
         friendLabel.text = [friends objectAtIndex:indexPath.row];
-//        friendLabel.font = [UIFont fontWithName:@"PopJoyStd-B" size:rect.size.height/16];
-        UIFont *font = [UIFont fontWithName:@"PopJoyStd-B" size:rect.size.height/16];
-        [friendLabel setFont:font];
+        friendLabel.font = [UIFont fontWithName:@"PopJoyStd-B" size:rect.size.height/16];
         friendLabel.textColor = [UIColor whiteColor];
         friendLabel.textAlignment = NSTextAlignmentCenter;
-        [myView addSubview:friendLabel];
+        [frontView addSubview:friendLabel];
         
     }else{
         
@@ -414,14 +455,15 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
         addUser.returnKeyType = UIReturnKeyJoin;
         addUser.delegate = self;
         addUser.keyboardType = UIKeyboardTypeASCIICapable;
-        [myView addSubview:addUser];
-
+        [frontView addSubview:addUser];
 
     }
-    
-
-    
     return cell;
+}
+
+-(void)block:(UIButton*)button{
+    // ここに何かの処理を記述する
+    // （引数の button には呼び出し元のUIButtonオブジェクトが引き渡されてきます）
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -454,7 +496,6 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
         [locationManager startUpdatingHeading]; // コンパスの向きを取得
         NSLog(@"コンパス呼ばれてる");
     }
-    
     // 選択状態の解除
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
@@ -695,6 +736,18 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
 //            NSLog(@"%@", object[@"username"]);
 //        }
 //    }];
+    if ([addUser.text isEqual:@""]) {
+        addJudge = 0;
+        
+    }else{
+        addJudge = 1;
+        [friends addObject:addUser.text];
+        cellNum = (int)[friends count] + 1;
+        [table reloadData];
+        NSLog(@"%@",friends);
+    }
+    
+
     return YES;
 }
 
@@ -765,8 +818,24 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
 
 - (void)keyboardWillBeHidden:(NSNotification*)aNotification
 {
-    CGPoint scrollReturnPoint = CGPointMake(0.0,rect.size.height/6.4 * (cellNum - 6) + rect.size.height/11.8);
-    [table setContentOffset:scrollReturnPoint animated:YES];
+    if ([addUser.text isEqual:@""]) {
+        addJudge = 0;
+        
+    }else{
+        addJudge = 1;
+    }
+
+    
+    NSLog(@"addjudge : %d",addJudge);
+    if (addJudge == 1) {
+        CGPoint scrollReturnPoint = CGPointMake(0.0,rect.size.height/6.4 * (cellNum - 3) + rect.size.height/11.8);
+        [table setContentOffset:scrollReturnPoint animated:YES];
+    }else{
+        CGPoint scrollReturnPoint = CGPointMake(0.0,rect.size.height/6.4 * (cellNum - 6) + rect.size.height/11.8);
+        [table setContentOffset:scrollReturnPoint animated:YES];
+    }
+    addJudge = 0;
+
 }
 
 
