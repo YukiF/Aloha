@@ -18,6 +18,9 @@
     
     UITableView *table;
     
+    UIRefreshControl *refreshControl;//引っ張って更新
+
+    
     //セルの数
     int cellNum;
     
@@ -35,7 +38,9 @@
     //タップした時のフィルター
     UIView * filterView;
     
-    UIButton *fukidasi;
+    UIImageView *fukidasi;
+    //fukidasiタッチしてるかどうか
+    int fukidasiJudge;
     
     //ユーザー追加するためのテキストフィールド
     UITextField *addUser;
@@ -59,6 +64,7 @@
     CGPoint location2;
     //タッチが終わった位置
     CGPoint location3;
+    
 
     //GPS用
     CLLocationManager *locationManager;

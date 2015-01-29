@@ -47,6 +47,18 @@
     
     [self.view addSubview:table];
     
+    //引っ張って更新
+    //http://adotout.sakura.ne.jp/?p=1120
+    refreshControl = [[UIRefreshControl alloc] init];
+    
+    // 更新アクションを設定
+    [refreshControl addTarget:self action:@selector(onRefresh:) forControlEvents:UIControlEventValueChanged];
+    refreshControl.tintColor = [UIColor blueColor];
+    
+    //tableViewに追加
+    [table addSubview:refreshControl];
+
+    
     //ヘッダー画像
     UIImageView * hedderView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hedder.png"]];
     hedderView.frame = CGRectMake(0,0,rect.size.width,rect.size.height * 0.17905);
@@ -120,13 +132,16 @@
     
     //吹き出しのボタン
     UIImage *imgFukidasi = [UIImage imageNamed:@"newFukidasi.png"];  // ボタンにする画像を生成する
-    fukidasi =  [UIButton buttonWithType:UIButtonTypeCustom];
+    fukidasi =   [[UIImageView alloc]initWithImage:imgFukidasi];
     fukidasi.frame = CGRectMake(rect.size.width/4*3,rect.size.height * 0.145833333333333333333333 / 4,rect.size.width/5,rect.size.width/5);
-    [fukidasi setBackgroundImage:imgFukidasi forState:UIControlStateNormal];  // 画像をセットする
+//    [fukidasi setBackgroundImage:imgFukidasi forState:UIControlStateNormal];  // 画像をセットする
     // ボタンが押された時にtoFukidasiメソッドを呼び出す
-    [fukidasi addTarget:self
-                 action:@selector(toOption:) forControlEvents:UIControlEventTouchUpInside];
+//    [fukidasi addTarget:self
+//                 action:@selector(toOption:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:fukidasi];
+    fukidasi.userInteractionEnabled = YES;
+    fukidasi.tag = 1;
+    fukidasiJudge = 0;
 
         
     //UIViewクラスのfilterViewを生成
@@ -197,6 +212,35 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+//引っ張って更新
+- (void)onRefresh:(id)sender
+{
+    
+    // 更新開始
+    // 更新処理をここに記述
+    NSLog(@"更新が始まった！");
+    
+    //jsonからのデータを更新
+    
+    //tableViewのデータを更新
+    [table reloadData];
+    
+    [NSTimer scheduledTimerWithTimeInterval:2.f target:self selector:@selector(endRefresh) userInfo:nil repeats:NO];
+    //本当はjsonの更新が終わったら呼びたい
+    
+    // 更新終了
+    
+}
+
+//更新を終わらせる
+- (void)endRefresh
+{
+    
+    [refreshControl endRefreshing];
+    NSLog(@"更新が終わった！");
+}
+
 
 - (void)locationManager:(CLLocationManager *)manager
      didUpdateLocations:(NSArray *)locations
@@ -350,45 +394,6 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
     UIImageView *userBackPic = [[UIImageView alloc]initWithImage:userBack];
     userBackPic.frame = CGRectMake(0,0,rect.size.width,rect.size.height/6.34482759);
     [myView addSubview:userBackPic];
-
-    //画像を表示
-//
-//    if (indexPath.row == 0) {
-//        UIImage *userBack = [UIImage imageNamed:@"newUserBack.png"];
-//        UIImageView *userBackPic = [[UIImageView alloc]initWithImage:userBack];
-//        userBackPic.frame = CGRectMake(0,0,rect.size.width,rect.size.height/6.4);
-//        [myView addSubview:userBackPic];
-//    }else if(indexPath.row == 1){
-//        UIImage *userBack = [UIImage imageNamed:@"newUserBack.png"];
-//        UIImageView *userBackPic = [[UIImageView alloc]initWithImage:userBack];
-//        userBackPic.frame = CGRectMake(0,0,rect.size.width,rect.size.height/6.4);
-//        [myView addSubview:userBackPic];
-//    }else if(indexPath.row == 2){
-//        UIImage *userBack = [UIImage imageNamed:@"userBack3.png"];
-//        UIImageView *userBackPic = [[UIImageView alloc]initWithImage:userBack];
-//        userBackPic.frame = CGRectMake(0,0,rect.size.width,rect.size.height/6.4);
-//        [myView addSubview:userBackPic];
-//    }else if(indexPath.row == 3){
-//        UIImage *userBack = [UIImage imageNamed:@"userBack4.png"];
-//        UIImageView *userBackPic = [[UIImageView alloc]initWithImage:userBack];
-//        userBackPic.frame = CGRectMake(0,0,rect.size.width,rect.size.height/6.4);
-//        [myView addSubview:userBackPic];
-//    }else if(indexPath.row == 4){
-//        UIImage *userBack = [UIImage imageNamed:@"userBack5.png"];
-//        UIImageView *userBackPic = [[UIImageView alloc]initWithImage:userBack];
-//        userBackPic.frame = CGRectMake(0,0,rect.size.width,rect.size.height/6.4);
-//        [myView addSubview:userBackPic];
-//    }else if(indexPath.row == 5){
-//        UIImage *userBack = [UIImage imageNamed:@"userBack6.png"];
-//        UIImageView *userBackPic = [[UIImageView alloc]initWithImage:userBack];
-//        userBackPic.frame = CGRectMake(0,0,rect.size.width,rect.size.height/6.4);
-//        [myView addSubview:userBackPic];
-//    }else{
-//        UIImage *userBack = [UIImage imageNamed:@"userBack7.png"];
-//        UIImageView *userBackPic = [[UIImageView alloc]initWithImage:userBack];
-//        userBackPic.frame = CGRectMake(0,0,rect.size.width,rect.size.height/6.4);
-//        [myView addSubview:userBackPic];
-//    }
     
     if (indexPath.row + 1 < cellNum) {
         //ラベル
@@ -467,15 +472,26 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    NSLog( @"%d",touch.view.tag );
     if (filterView.alpha == 1.0) {
         // シングルタッチの場合
         touch = [touches anyObject];
         location1 = [touch locationInView:filterView];
         //    NSLog(@"x:%f y:%f", location1.x, location1.y);
+    }else{
+        
+        touch = [touches anyObject];
+        if ( touch.view.tag == fukidasi.tag ){
+            fukidasiJudge = 1;
+            location1 = [touch locationInView:self.view];
+
+        }
+        
     }
 }
 
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{
+    NSLog(@"%d",fukidasiJudge);
     if (filterView.alpha == 1.0) {
         
         if (targetAzimuth <= 15 || targetAzimuth >= 345) {
@@ -501,6 +517,11 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
                 
             }
         }
+    }else if(fukidasiJudge == 1){
+        
+        touch = [touches anyObject];
+        location2 = [touch locationInView:self.view];
+        fukidasi.center = CGPointMake(location2.x, location2.y);
     }
 }
 
@@ -523,6 +544,7 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
+
     if (filterView.alpha == 1.0) {
         
         
@@ -588,10 +610,22 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
                 
             }
         }
+    }else if(fukidasiJudge == 1){
+        
+        touch = [touches anyObject];
+        location3 = [touch locationInView:self.view];
+        
+        if (location1.x - 10 <= location3.x && location1.x + 10 >= location3.x && location1.y - 10 <= location3.y && location1.y + 10 >= location3.y) {
+            
+            [self toOption];
+            // タッチされたときの処理
+            fukidasiJudge = 0;
+            
+        }
     }
 }
 
--(void)toOption:(UIButton*)button{
+-(void)toOption{
     
     ViewController *ViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"OVC"];
     [self presentViewController:ViewController animated:YES completion:nil];
