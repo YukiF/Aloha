@@ -181,11 +181,16 @@
         NSLog(@"response: %@", responseObject);
         
         //ユーザーのid番号をいれたい
-        int userId = [responseObject[@"id"] intValue];
+        userId = [responseObject[@"id"] intValue];
         NSLog(@"ID %d",userId);
+        
+        userName = responseObject[@"name"];
+        NSLog(@"User Name %@",userName);
         
         NSUserDefaults *userSave = [NSUserDefaults standardUserDefaults];
         [userSave setInteger:userId forKey:@"userId"];
+        [userSave setObject:userName forKey:@"userName"];
+
         
         
         

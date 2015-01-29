@@ -22,7 +22,10 @@
     
     NSUserDefaults *userSave = [NSUserDefaults standardUserDefaults];
     userId = [userSave integerForKey:@"userId"];
+    userName = [userSave objectForKey:@"userName"];
     NSLog(@"%d",userId);
+    NSLog(@"%@",userName);
+
     
     //ステータスバーが見えていたら消す
     //http://www.dprog.info/ios/xcode5_status_bar_appearance/
@@ -49,6 +52,17 @@
     hedderView.frame = CGRectMake(0,0,rect.size.width,rect.size.height * 0.17905);
     [self.view addSubview:hedderView];
     
+    UILabel *myLabel = [[UILabel alloc] init];
+    myLabel.frame = CGRectMake(0,0,rect.size.width,rect.size.width/4);
+    myLabel.center = CGPointMake(rect.size.width/2,rect.size.height  * 0.145833333333333333333333/2);
+    myLabel.text = userName;
+    UIFont *font = [UIFont fontWithName:@"PopJoyStd-B" size:rect.size.height/16];
+    [myLabel setFont:font];
+    myLabel.textColor = [UIColor whiteColor];
+    myLabel.textAlignment = NSTextAlignmentCenter;
+    [hedderView addSubview:myLabel];
+
+    
     //http://zutto-megane.com/objective-c/post-384/
     //GPSの利用可否判断
     if ([CLLocationManager locationServicesEnabled]) {
@@ -72,33 +86,33 @@
     
     //友達の名前の配列
     friends = [[NSMutableArray alloc] init];
-    NSString *ex1 = @"GAMI";
+    NSString *ex1 = @"SHUN";
     [friends addObject:ex1];
-    NSString *ex2 = @"BANNAROT";
+    NSString *ex2 = @"DAVE";
     [friends addObject:ex2];
-    NSString *ex3 = @"FABIO";
+    NSString *ex3 = @"STEVE";
     [friends addObject:ex3];
-    NSString *ex4 = @"KYSER";
+    NSString *ex4 = @"BILL";
     [friends addObject:ex4];
-    NSString *ex5 = @"POLO";
+    NSString *ex5 = @"MARK";
     [friends addObject:ex5];
-    NSString *ex6 = @"OZKUN";
+    NSString *ex6 = @"LARRY";
     [friends addObject:ex6];
-    NSString *ex7 = @"THIBAULT";
+    NSString *ex7 = @"ELON";
     [friends addObject:ex7];
-    NSString *ex8 = @"DORENTINA";
+    NSString *ex8 = @"MASAYOSHI";
     [friends addObject:ex8];
-    NSString *ex9 = @"MARCO";
+    NSString *ex9 = @"TADASHI";
     [friends addObject:ex9];
-    NSString *ex10 = @"JULIANA";
+    NSString *ex10 = @"HIROSHI";
     [friends addObject:ex10];
-    NSString *ex11 = @"POPO";
+    NSString *ex11 = @"TAKAFUMI";
     [friends addObject:ex11];
-    NSString *ex12 = @"AMAAA";
+    NSString *ex12 = @"TOMOKO";
     [friends addObject:ex12];
-    NSString *ex13 = @"KAKAKAKA";
+    NSString *ex13 = @"TAKESHI";
     [friends addObject:ex13];
-    NSString *ex14 = @"KAKOKKIJHYT";
+    NSString *ex14 = @"YUKI";
     [friends addObject:ex14];
     
     //境界線を消す
@@ -410,11 +424,7 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    PFObject *testObject = [PFObject objectWithClassName:@"TestObject"];
-//    testObject[@"Yuki"] = @"Futagami";
-//    [testObject saveInBackground];
-    
-    // cellがタップされた際の処理
+       // cellがタップされた際の処理
     if (indexPath.row + 1 < cellNum) {
         [UIView animateWithDuration:0.5f
                          animations:^{
@@ -448,6 +458,11 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
         [addUser becomeFirstResponder];
         
     }
+    
+    // 選択状態の解除
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -525,6 +540,7 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
                                      filterView.alpha = 0.0;
                                  }];
                 [locationManager stopUpdatingHeading];
+                
             }
         }else{
             if (targetAzimuth <= 15 || targetAzimuth >= 345) {

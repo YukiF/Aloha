@@ -10,6 +10,7 @@
 #import "SignUpViewController.h"
 
 int userId;
+NSString *userName;
 
 @interface firstViewController : UIViewController{
     
