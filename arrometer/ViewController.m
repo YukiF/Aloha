@@ -133,11 +133,7 @@
     //吹き出しのボタン
     UIImage *imgFukidasi = [UIImage imageNamed:@"newFukidasi.png"];  // ボタンにする画像を生成する
     fukidasi =   [[UIImageView alloc]initWithImage:imgFukidasi];
-    fukidasi.frame = CGRectMake(rect.size.width/4*3,rect.size.height * 0.145833333333333333333333 / 4,rect.size.width/5,rect.size.width/5);
-//    [fukidasi setBackgroundImage:imgFukidasi forState:UIControlStateNormal];  // 画像をセットする
-    // ボタンが押された時にtoFukidasiメソッドを呼び出す
-//    [fukidasi addTarget:self
-//                 action:@selector(toOption:) forControlEvents:UIControlEventTouchUpInside];
+    fukidasi.frame = CGRectMake(rect.size.width/5*4 - rect.size.height * 0.145833333333333333333333 / 6,rect.size.height * 0.145833333333333333333333 / 6,rect.size.width/5,rect.size.width/5);
     [self.view addSubview:fukidasi];
     fukidasi.userInteractionEnabled = YES;
     fukidasi.tag = 1;
@@ -522,6 +518,7 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
         touch = [touches anyObject];
         location2 = [touch locationInView:self.view];
         fukidasi.center = CGPointMake(location2.x, location2.y);
+        NSLog(@"%@",NSStringFromCGPoint(fukidasi.center));
     }
 }
 
@@ -616,12 +613,59 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
         location3 = [touch locationInView:self.view];
         
         if (location1.x - 10 <= location3.x && location1.x + 10 >= location3.x && location1.y - 10 <= location3.y && location1.y + 10 >= location3.y) {
-            
-            [self toOption];
             // タッチされたときの処理
-            fukidasiJudge = 0;
-            
+            [self toOption];
+        }else if(location3.y <= rect.size.height * 0.145833333333333333333333 / 6 * 4 + rect.size.width/10){
+            if(location3.x <= rect.size.width/5 + rect.size.height * 0.145833333333333333333333 / 6 - rect.size.width/10){
+                [UIView animateWithDuration:0.3f
+                                 animations:^{
+                                     fukidasi.center = CGPointMake(rect.size.width/5 + rect.size.height * 0.145833333333333333333333 / 6 - rect.size.width/10, rect.size.height * 0.145833333333333333333333 / 6 + rect.size.width/10);
+                                 }];
+            }else if(location3.x >= rect.size.width/5*4 - rect.size.height * 0.145833333333333333333333 / 6 + rect.size.width/10){
+                [UIView animateWithDuration:0.3f
+                                 animations:^{
+                                     fukidasi.center = CGPointMake(rect.size.width/5*4 - rect.size.height * 0.145833333333333333333333 / 6 + rect.size.width/10, rect.size.height * 0.145833333333333333333333 / 6 + rect.size.width/10);
+                                 }];
+            }else{
+                [UIView animateWithDuration:0.3f
+                                 animations:^{
+                                     fukidasi.center = CGPointMake(location3.x, rect.size.height * 0.145833333333333333333333 / 6 + rect.size.width/10);
+                                 }];
+            }
+        }else if(location3.y >= rect.size.height - rect.size.height * 0.145833333333333333333333 / 6 * 4 - rect.size.width/10){
+            if(location3.x <= rect.size.width/5 + rect.size.height * 0.145833333333333333333333 / 6 - rect.size.width/10){
+                [UIView animateWithDuration:0.3f
+                                 animations:^{
+                                     fukidasi.center = CGPointMake(rect.size.width/5 + rect.size.height * 0.145833333333333333333333 / 6 - rect.size.width/10,rect.size.height - rect.size.height * 0.145833333333333333333333 / 6 - rect.size.width/10);
+                                 }];
+            }else if(location3.x >= rect.size.width/5*4 - rect.size.height * 0.145833333333333333333333 / 6 + rect.size.width/10){
+                [UIView animateWithDuration:0.3f
+                                 animations:^{
+                                     fukidasi.center = CGPointMake(rect.size.width/5*4 - rect.size.height * 0.145833333333333333333333 / 6 + rect.size.width/10,rect.size.height - rect.size.height * 0.145833333333333333333333 / 6 - rect.size.width/10);
+                                 }];
+            }else{
+            [UIView animateWithDuration:0.3f
+                             animations:^{
+                                 fukidasi.center = CGPointMake(location3.x, rect.size.height - rect.size.height * 0.145833333333333333333333 / 6 - rect.size.width/10);
+                             }];
+            }
+        }else if(location3.x >= rect.size.width / 2){
+            [UIView animateWithDuration:0.3f
+                             animations:^{
+                                 fukidasi.center = CGPointMake(rect.size.width/5*4 - rect.size.height * 0.145833333333333333333333 / 6 + rect.size.width/10,location3.y);
+                             }];
+        }else if(location3.x < rect.size.width / 2){
+            [UIView animateWithDuration:0.3f
+                             animations:^{
+                                 fukidasi.center = CGPointMake(rect.size.width/5 + rect.size.height * 0.145833333333333333333333 / 6 - rect.size.width/10,location3.y);
+                             }];
         }
+
+
+        
+        fukidasiJudge = 0;
+
+        
     }
 }
 
