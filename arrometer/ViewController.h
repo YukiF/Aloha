@@ -16,7 +16,7 @@
 
 @interface ViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,UIScrollViewDelegate,CLLocationManagerDelegate>{
     
-    IBOutlet UITableView *table;
+    UITableView *table;
     
     //セルの数
     int cellNum;
@@ -29,14 +29,13 @@
     
     //ステータスバーを除いたサイズ
     CGRect rect;
+    
+    UIImageView *hawaiBc;
    
     //タップした時のフィルター
     UIView * filterView;
     
     UIButton *fukidasi;
-    
-    //バックグラウンドを画像に設定
-    UIImageView *myView;
     
     //ユーザー追加するためのテキストフィールド
     UITextField *addUser;

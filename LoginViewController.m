@@ -116,7 +116,7 @@
         // 入力済みのテキストと入力が行われたテキストを結合
         [str replaceCharactersInRange:range withString:string];
         
-        if ([str length] > 12) {
+        if ([str length] > 11) {
             // ※ここに文字数制限を超えたことを通知する処理を追加
             
             return NO;

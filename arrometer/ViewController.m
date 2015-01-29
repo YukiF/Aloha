@@ -14,6 +14,8 @@
 
 @implementation ViewController
 
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
@@ -33,9 +35,19 @@
     //ステータスバーを除いたサイズ
     rect = sc.applicationFrame;
     
-    
+    table = [[UITableView alloc]initWithFrame:CGRectMake(0, rect.size.height * 0.145833333333333333333333, rect.size.width, rect.size.height - rect.size.height * 0.145833333333333333333333) style:UITableViewStylePlain];
     table.delegate = self;
     table.dataSource = self;
+    
+    UIColor* tableBackgroundColor = [UIColor clearColor];
+    [table setBackgroundColor:tableBackgroundColor];
+    
+    [self.view addSubview:table];
+    
+    //ヘッダー画像
+    UIImageView * hedderView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"hedder.png"]];
+    hedderView.frame = CGRectMake(0,0,rect.size.width,rect.size.height * 0.17905);
+    [self.view addSubview:hedderView];
     
     //http://zutto-megane.com/objective-c/post-384/
     //GPSの利用可否判断
@@ -57,7 +69,6 @@
     } else {
         NSLog(@"The location services is disabled.");
     }
-    
     
     //友達の名前の配列
     friends = [[NSMutableArray alloc] init];
@@ -87,17 +98,16 @@
     [friends addObject:ex12];
     NSString *ex13 = @"KAKAKAKA";
     [friends addObject:ex13];
-    NSString *ex14 = @"KAKOKKIJHYTUJIK";
+    NSString *ex14 = @"KAKOKKIJHYT";
     [friends addObject:ex14];
     
     //境界線を消す
     table.separatorColor = [UIColor clearColor];
     
-    
     //吹き出しのボタン
-    UIImage *imgFukidasi = [UIImage imageNamed:@"fukidasi.png"];  // ボタンにする画像を生成する
+    UIImage *imgFukidasi = [UIImage imageNamed:@"newFukidasi.png"];  // ボタンにする画像を生成する
     fukidasi =  [UIButton buttonWithType:UIButtonTypeCustom];
-    fukidasi.frame = CGRectMake(rect.size.width/4*3,rect.size.height-rect.size.width/4*1,rect.size.width/5,rect.size.width/5);
+    fukidasi.frame = CGRectMake(rect.size.width/4*3,rect.size.height * 0.145833333333333333333333 / 4,rect.size.width/5,rect.size.width/5);
     [fukidasi setBackgroundImage:imgFukidasi forState:UIControlStateNormal];  // 画像をセットする
     // ボタンが押された時にtoFukidasiメソッドを呼び出す
     [fukidasi addTarget:self
@@ -291,73 +301,90 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
 //セルの作り方の設定と、セルの内容を決めるメソッド
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+ 
     NSString *cellIdentifier = @"Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     if (!cell) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        [cell setBackgroundColor:[UIColor clearColor]];
+
     }
+    
+    
+    //http://works.sabitori.com/2011/06/18/table-redraw/
+    // サブビューを取り除く
+    for (UIView *subview in [cell.contentView subviews]) {
+        [subview removeFromSuperview];
+    }
+    
     
     table.rowHeight = rect.size.height/6.4;
     
     /* -- cellに直接ラベルを載せれないので、UIViewを1クッション置く。 -- */
     //UIViewクラスのmyViewを生成
-//    UIView * myView = [[UIView alloc] init];
-    UIImage *skyView = [UIImage imageNamed:@"sky1.jpg"];
-    myView = [[UIImageView alloc]initWithImage:skyView];
+    UIView * myView = [[UIView alloc] init];
     myView.frame = CGRectMake(0, 0, rect.size.width, rect.size.height/6.4);
-
-//    myView.frame = CGRectMake(0, 0, rect.size.width, rect.size.height/6.4);
-//    myView.backgroundColor = [UIColor colorWithRed:0.08235 green:0.57647 blue:0.78039 alpha:1.0];
+    myView.backgroundColor = [UIColor clearColor];
+    
     //myViewをcellに表示
     [cell.contentView addSubview:myView];
     
+    UIImage *userBack = [UIImage imageNamed:@"newUserBack.png"];
+    UIImageView *userBackPic = [[UIImageView alloc]initWithImage:userBack];
+    userBackPic.frame = CGRectMake(0,0,rect.size.width,rect.size.height/6.34482759);
+    [myView addSubview:userBackPic];
+
     //画像を表示
-    if (indexPath.row == 0) {
-        UIImage *userBack = [UIImage imageNamed:@"userBack1.png"];
-        UIImageView *userBackPic = [[UIImageView alloc]initWithImage:userBack];
-        userBackPic.frame = CGRectMake(0,0,rect.size.width,rect.size.height/6.4);
-        [myView addSubview:userBackPic];
-    }else if(indexPath.row == 1){
-        UIImage *userBack = [UIImage imageNamed:@"userBack2.png"];
-        UIImageView *userBackPic = [[UIImageView alloc]initWithImage:userBack];
-        userBackPic.frame = CGRectMake(0,0,rect.size.width,rect.size.height/6.4);
-        [myView addSubview:userBackPic];
-    }else if(indexPath.row == 2){
-        UIImage *userBack = [UIImage imageNamed:@"userBack3.png"];
-        UIImageView *userBackPic = [[UIImageView alloc]initWithImage:userBack];
-        userBackPic.frame = CGRectMake(0,0,rect.size.width,rect.size.height/6.4);
-        [myView addSubview:userBackPic];
-    }else if(indexPath.row == 3){
-        UIImage *userBack = [UIImage imageNamed:@"userBack4.png"];
-        UIImageView *userBackPic = [[UIImageView alloc]initWithImage:userBack];
-        userBackPic.frame = CGRectMake(0,0,rect.size.width,rect.size.height/6.4);
-        [myView addSubview:userBackPic];
-    }else if(indexPath.row == 4){
-        UIImage *userBack = [UIImage imageNamed:@"userBack5.png"];
-        UIImageView *userBackPic = [[UIImageView alloc]initWithImage:userBack];
-        userBackPic.frame = CGRectMake(0,0,rect.size.width,rect.size.height/6.4);
-        [myView addSubview:userBackPic];
-    }else if(indexPath.row == 5){
-        UIImage *userBack = [UIImage imageNamed:@"userBack6.png"];
-        UIImageView *userBackPic = [[UIImageView alloc]initWithImage:userBack];
-        userBackPic.frame = CGRectMake(0,0,rect.size.width,rect.size.height/6.4);
-        [myView addSubview:userBackPic];
-    }else{
-        UIImage *userBack = [UIImage imageNamed:@"userBack7.png"];
-        UIImageView *userBackPic = [[UIImageView alloc]initWithImage:userBack];
-        userBackPic.frame = CGRectMake(0,0,rect.size.width,rect.size.height/6.4);
-        [myView addSubview:userBackPic];
-    }
+//
+//    if (indexPath.row == 0) {
+//        UIImage *userBack = [UIImage imageNamed:@"newUserBack.png"];
+//        UIImageView *userBackPic = [[UIImageView alloc]initWithImage:userBack];
+//        userBackPic.frame = CGRectMake(0,0,rect.size.width,rect.size.height/6.4);
+//        [myView addSubview:userBackPic];
+//    }else if(indexPath.row == 1){
+//        UIImage *userBack = [UIImage imageNamed:@"newUserBack.png"];
+//        UIImageView *userBackPic = [[UIImageView alloc]initWithImage:userBack];
+//        userBackPic.frame = CGRectMake(0,0,rect.size.width,rect.size.height/6.4);
+//        [myView addSubview:userBackPic];
+//    }else if(indexPath.row == 2){
+//        UIImage *userBack = [UIImage imageNamed:@"userBack3.png"];
+//        UIImageView *userBackPic = [[UIImageView alloc]initWithImage:userBack];
+//        userBackPic.frame = CGRectMake(0,0,rect.size.width,rect.size.height/6.4);
+//        [myView addSubview:userBackPic];
+//    }else if(indexPath.row == 3){
+//        UIImage *userBack = [UIImage imageNamed:@"userBack4.png"];
+//        UIImageView *userBackPic = [[UIImageView alloc]initWithImage:userBack];
+//        userBackPic.frame = CGRectMake(0,0,rect.size.width,rect.size.height/6.4);
+//        [myView addSubview:userBackPic];
+//    }else if(indexPath.row == 4){
+//        UIImage *userBack = [UIImage imageNamed:@"userBack5.png"];
+//        UIImageView *userBackPic = [[UIImageView alloc]initWithImage:userBack];
+//        userBackPic.frame = CGRectMake(0,0,rect.size.width,rect.size.height/6.4);
+//        [myView addSubview:userBackPic];
+//    }else if(indexPath.row == 5){
+//        UIImage *userBack = [UIImage imageNamed:@"userBack6.png"];
+//        UIImageView *userBackPic = [[UIImageView alloc]initWithImage:userBack];
+//        userBackPic.frame = CGRectMake(0,0,rect.size.width,rect.size.height/6.4);
+//        [myView addSubview:userBackPic];
+//    }else{
+//        UIImage *userBack = [UIImage imageNamed:@"userBack7.png"];
+//        UIImageView *userBackPic = [[UIImageView alloc]initWithImage:userBack];
+//        userBackPic.frame = CGRectMake(0,0,rect.size.width,rect.size.height/6.4);
+//        [myView addSubview:userBackPic];
+//    }
     
     if (indexPath.row + 1 < cellNum) {
         //ラベル
         UILabel *friendLabel = [[UILabel alloc] init];
         friendLabel.frame = CGRectMake(160,8,rect.size.width,rect.size.width/4);
-        friendLabel.center = CGPointMake(rect.size.width/2,rect.size.height/12.8);
+        friendLabel.center = CGPointMake(rect.size.width/2,rect.size.height/6.34482759/2);
         friendLabel.text = [friends objectAtIndex:indexPath.row];
-        friendLabel.font = [UIFont fontWithName:@"AvenirNext-UltraLight" size:rect.size.height/16];
+//        friendLabel.font = [UIFont fontWithName:@"PopJoyStd-B" size:rect.size.height/16];
+        UIFont *font = [UIFont fontWithName:@"PopJoyStd-B" size:rect.size.height/16];
+        [friendLabel setFont:font];
         friendLabel.textColor = [UIColor whiteColor];
         friendLabel.textAlignment = NSTextAlignmentCenter;
         [myView addSubview:friendLabel];
@@ -367,7 +394,7 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
         addUser = [[UITextField alloc] initWithFrame:CGRectMake(0,0,rect.size.width,rect.size.height/6.4)];
         addUser.textAlignment = NSTextAlignmentCenter;
         addUser.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"+" attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor] ,}];
-        addUser.font = [ UIFont fontWithName:@"AvenirNext-UltraLight" size:rect.size.height/16];
+        addUser.font = [ UIFont fontWithName:@"PopJoyStd-B" size:rect.size.height/16];
         addUser.textColor = [UIColor whiteColor];
         addUser.returnKeyType = UIReturnKeyJoin;
         addUser.delegate = self;
@@ -375,6 +402,8 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
 
 
     }
+    
+
     
     return cell;
 }
@@ -587,7 +616,7 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
         // 入力済みのテキストと入力が行われたテキストを結合
         [str replaceCharactersInRange:range withString:string];
         
-        if ([str length] > 12) {
+        if ([str length] > 11) {
             // ※ここに文字数制限を超えたことを通知する処理を追加
             
             return NO;
@@ -634,14 +663,14 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
     // キーボードの表示開始時の場所と大きさを取得します。
     CGRect keyboardFrameBegin = [[aNotification.userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue];
 
-    CGPoint scrollPoint = CGPointMake(0.0,rect.size.height/6.4 * (cellNum - 7) + rect.size.height/11.8 + keyboardFrameBegin.size.height);
+    CGPoint scrollPoint = CGPointMake(0.0,rect.size.height/6.4 * (cellNum - 6) + rect.size.height/11.8 + keyboardFrameBegin.size.height);
     [table setContentOffset:scrollPoint animated:YES];
 
 }
 
 - (void)keyboardWillBeHidden:(NSNotification*)aNotification
 {
-    CGPoint scrollReturnPoint = CGPointMake(0.0,rect.size.height/6.4 * (cellNum - 7) + rect.size.height/11.8);
+    CGPoint scrollReturnPoint = CGPointMake(0.0,rect.size.height/6.4 * (cellNum - 6) + rect.size.height/11.8);
     [table setContentOffset:scrollReturnPoint animated:YES];
 }
 
