@@ -222,7 +222,7 @@
     //tableViewのデータを更新
     [table reloadData];
     
-    [NSTimer scheduledTimerWithTimeInterval:2.f target:self selector:@selector(endRefresh) userInfo:nil repeats:NO];
+    [NSTimer scheduledTimerWithTimeInterval:1.f target:self selector:@selector(endRefresh) userInfo:nil repeats:NO];
     //本当はjsonの更新が終わったら呼びたい
     
     // 更新終了
@@ -413,6 +413,7 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
         addUser.textColor = [UIColor whiteColor];
         addUser.returnKeyType = UIReturnKeyJoin;
         addUser.delegate = self;
+        addUser.keyboardType = UIKeyboardTypeASCIICapable;
         [myView addSubview:addUser];
 
 
@@ -452,18 +453,10 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
 //        [locationManager startUpdatingLocation]; // 現在位置を取得する
         [locationManager startUpdatingHeading]; // コンパスの向きを取得
         NSLog(@"コンパス呼ばれてる");
-
-    }else{
-        
-        table.userInteractionEnabled = NO;
-        [addUser becomeFirstResponder];
-        
     }
     
     // 選択状態の解除
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -675,11 +668,19 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
     [self presentViewController:ViewController animated:YES completion:nil];
 }
 
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
+    
+    table.userInteractionEnabled = NO;
+    fukidasi.userInteractionEnabled = NO;
+    
+    return YES;
+}
 
 -(BOOL)textFieldShouldReturn:(UITextField*)textField{
     
     [addUser resignFirstResponder];
     table.userInteractionEnabled = YES;
+    fukidasi.userInteractionEnabled = YES;
 
 //    //ユーザーが存在するかどうかを確認
 //    PFQuery *pfQuery = [PFQuery queryWithClassName:@"_User"];
@@ -759,7 +760,7 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
 
     CGPoint scrollPoint = CGPointMake(0.0,rect.size.height/6.4 * (cellNum - 6) + rect.size.height/11.8 + keyboardFrameBegin.size.height);
     [table setContentOffset:scrollPoint animated:YES];
-
+    
 }
 
 - (void)keyboardWillBeHidden:(NSNotification*)aNotification

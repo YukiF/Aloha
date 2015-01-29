@@ -51,6 +51,7 @@
 		989C875A1A79C09D006DC17E /* newUserBack.png in Resources */ = {isa = PBXBuildFile; fileRef = 989C87561A79C09D006DC17E /* newUserBack.png */; };
 		989C875C1A79C5CF006DC17E /* newBackGround.png in Resources */ = {isa = PBXBuildFile; fileRef = 989C875B1A79C5CF006DC17E /* newBackGround.png */; };
 		989C875E1A79D162006DC17E /* hedder.png in Resources */ = {isa = PBXBuildFile; fileRef = 989C875D1A79D162006DC17E /* hedder.png */; };
+		98E1AB011A7A0DDB007A807D /* FOT-PopJoyStd-B.otf in Resources */ = {isa = PBXBuildFile; fileRef = 98E1AB001A7A0DDB007A807D /* FOT-PopJoyStd-B.otf */; };
 		98E48AD01A6227310021B014 /* fukidasi.png in Resources */ = {isa = PBXBuildFile; fileRef = 98E48ACF1A6227310021B014 /* fukidasi.png */; };
 		98E48AD31A622ED00021B014 /* OptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E48AD21A622ED00021B014 /* OptionViewController.m */; };
 		98F1980C1A58BF7100869846 /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 98F1980A1A58BF7100869846 /* arrow.png */; };
@@ -104,7 +105,6 @@
 		98625C4F1A5F79540021B929 /* whiteWaku.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteWaku.png; sourceTree = "<group>"; };
 		98625C511A5FA84A0021B929 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = ../LoginViewController.h; sourceTree = "<group>"; };
 		98625C521A5FA84A0021B929 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginViewController.m; path = ../LoginViewController.m; sourceTree = "<group>"; };
-		9865F71B1A79DDC700446F5C /* FOT-PopJoyStd-B.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "FOT-PopJoyStd-B.otf"; sourceTree = "<group>"; };
 		986B875D1A7587D6001EA102 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		986B875F1A759370001EA102 /* 新規録音.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "新規録音.wav"; sourceTree = "<group>"; };
 		986B87611A75A5B0001EA102 /* sky1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky1.jpg; sourceTree = "<group>"; };
@@ -153,6 +153,7 @@
 		989C87561A79C09D006DC17E /* newUserBack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = newUserBack.png; sourceTree = "<group>"; };
 		989C875B1A79C5CF006DC17E /* newBackGround.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = newBackGround.png; sourceTree = "<group>"; };
 		989C875D1A79D162006DC17E /* hedder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hedder.png; sourceTree = "<group>"; };
+		98E1AB001A7A0DDB007A807D /* FOT-PopJoyStd-B.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "FOT-PopJoyStd-B.otf"; sourceTree = "<group>"; };
 		98E48ACF1A6227310021B014 /* fukidasi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fukidasi.png; sourceTree = "<group>"; };
 		98E48AD11A622ED00021B014 /* OptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OptionViewController.h; path = ../OptionViewController.h; sourceTree = "<group>"; };
 		98E48AD21A622ED00021B014 /* OptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OptionViewController.m; path = ../OptionViewController.m; sourceTree = "<group>"; };
@@ -316,7 +317,7 @@
 		98FEF41E1A5867DD00B2AE63 = {
 			isa = PBXGroup;
 			children = (
-				9865F71B1A79DDC700446F5C /* FOT-PopJoyStd-B.otf */,
+				98E1AB001A7A0DDB007A807D /* FOT-PopJoyStd-B.otf */,
 				986B87651A780632001EA102 /* AFNetworking */,
 				986B87791A780632001EA102 /* UIKit+AFNetworking */,
 				982F2E351A5B7B730067F7E2 /* frameworks */,
@@ -485,6 +486,7 @@
 				98F1980D1A58BF7100869846 /* circle.png in Resources */,
 				986B87621A75A5B0001EA102 /* sky1.jpg in Resources */,
 				986B87641A77558E001EA102 /* arrowLight.png in Resources */,
+				98E1AB011A7A0DDB007A807D /* FOT-PopJoyStd-B.otf in Resources */,
 				98FEF43E1A5867DD00B2AE63 /* LaunchScreen.xib in Resources */,
 				98625C3E1A5F5E1E0021B929 /* haikei.png in Resources */,
 				98625C471A5F76A60021B929 /* userBack2.png in Resources */,

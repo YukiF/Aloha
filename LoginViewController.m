@@ -51,6 +51,8 @@
     pass.font = [ UIFont fontWithName:@"AvenirNext-UltraLight" size:rect.size.height/16];
     userName.textColor = [UIColor whiteColor];
     pass.textColor = [UIColor whiteColor];
+    userName.keyboardType = UIKeyboardTypeASCIICapable;
+    pass.keyboardType = UIKeyboardTypeASCIICapable;
     
     [self.view addSubview:userName];
     [self.view addSubview:pass];
