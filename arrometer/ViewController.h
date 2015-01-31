@@ -12,9 +12,10 @@
 #import <AudioToolbox/AudioToolbox.h>
 #import <QuartzCore/QuartzCore.h>
 #import "firstViewController.h"
+#import "SWTableViewCell.h"
 
 
-@interface ViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,UIScrollViewDelegate,CLLocationManagerDelegate>{
+@interface ViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,UIScrollViewDelegate,CLLocationManagerDelegate,SWTableViewCellDelegate>{
     
     UITableView *table;
     
@@ -35,6 +36,8 @@
     
     UIImageView *hawaiBc;
    
+    UIView * frontView;
+    
     //タップした時のフィルター
     UIView * filterView;
     

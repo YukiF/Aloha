@@ -21,7 +21,18 @@
                     <view key="view" contentMode="scaleToFill" id="FnJ-6o-etu">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="firstView.png" translatesAutoresizingMaskIntoConstraints="NO" id="o0Y-Wj-4qJ">
+                                <rect key="frame" x="-1" y="-1" width="415" height="737"/>
+                            </imageView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="o0Y-Wj-4qJ" secondAttribute="trailing" constant="-16" id="2iU-SS-hji"/>
+                            <constraint firstItem="khg-9Q-cZj" firstAttribute="top" secondItem="o0Y-Wj-4qJ" secondAttribute="bottom" id="36f-ZH-4qD"/>
+                            <constraint firstItem="o0Y-Wj-4qJ" firstAttribute="leading" secondItem="FnJ-6o-etu" secondAttribute="leadingMargin" constant="-17" id="KXU-qn-4Hu"/>
+                            <constraint firstItem="o0Y-Wj-4qJ" firstAttribute="top" secondItem="FnJ-6o-etu" secondAttribute="topMargin" constant="-1" id="Ymx-mK-2sc"/>
+                        </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                 </viewController>
@@ -124,6 +135,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="firstView.png" width="1081" height="1921"/>
         <image name="newBackGround.png" width="1080" height="1920"/>
     </resources>
 </document>

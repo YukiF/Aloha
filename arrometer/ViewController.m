@@ -7,6 +7,8 @@
 //
 
 #import "ViewController.h"
+#import "SWTableViewCell.h"
+
 
 @interface ViewController ()
 
@@ -358,18 +360,24 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
- 
-    NSString *cellIdentifier = @"Cell";
+    //http://www.iosjp.com/dev/archives/935
+    static NSString *cellIdentifier = @"Cell";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    
-    if (!cell) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-        [cell setBackgroundColor:[UIColor clearColor]];
+    SWTableViewCell *cell = (SWTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
 
+    if (cell == nil) {
+        if (indexPath.row + 1 < cellNum) {
+            
+            cell = [[SWTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
+            cell.rightUtilityButtons = [self rightButtons];
+            cell.delegate = self;
+
+            [cell setBackgroundColor:[UIColor clearColor]];
+
+        }
     }
     
-    
+
     //http://works.sabitori.com/2011/06/18/table-redraw/
     // サブビューを取り除く
     for (UIView *subview in [cell.contentView subviews]) {
@@ -422,7 +430,7 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
 
     
     //UIViewクラスのfrontViewを生成
-    UIView * frontView = [[UIView alloc] init];
+    frontView = [[UIView alloc] init];
     frontView.frame = CGRectMake(0, 0, rect.size.width, rect.size.height/6.4);
     frontView.backgroundColor = [UIColor clearColor];
     
@@ -460,6 +468,85 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
     }
     return cell;
 }
+
+
+- (NSArray *)rightButtons
+{
+    NSMutableArray *rightUtilityButtons = [NSMutableArray new];
+    [rightUtilityButtons sw_addUtilityButtonWithColor:
+     [UIColor colorWithRed:0.78f green:0.78f blue:0.8f alpha:0.0f]
+                                                 icon:[UIImage imageNamed:@"cancel.png"]];
+    [rightUtilityButtons sw_addUtilityButtonWithColor:
+     [UIColor colorWithRed:1.0f green:0.231f blue:0.188 alpha:0.0f]
+                                                 icon:[UIImage imageNamed:@"block.png"]];
+    
+    return rightUtilityButtons;
+}
+
+#pragma mark - SWTableViewDelegate
+
+- (void)swipeableTableViewCell:(SWTableViewCell *)cell scrollingToState:(SWCellState)state
+{
+    switch (state) {
+        case 0:
+            NSLog(@"utility buttons closed");
+            break;
+        case 1:
+            NSLog(@"left utility buttons open");
+            break;
+        case 2:
+            NSLog(@"right utility buttons open");
+            break;
+        default:
+            break;
+    }
+}
+
+
+- (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index
+{
+    switch (index) {
+        case 0:
+        {
+            NSLog(@"cancel");
+            [cell hideUtilityButtonsAnimated:YES];
+            break;
+        }
+        case 1:
+        {
+            NSLog(@"block");
+
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+- (BOOL)swipeableTableViewCellShouldHideUtilityButtonsOnSwipe:(SWTableViewCell *)cell
+{
+    // allow just one cell's utility button to be open at once
+    return YES;
+}
+
+- (BOOL)swipeableTableViewCell:(SWTableViewCell *)cell canSwipeToState:(SWCellState)state
+{
+    switch (state) {
+        case 1:
+            // set to NO to disable all left utility buttons appearing
+            return YES;
+            break;
+        case 2:
+            // set to NO to disable all right utility buttons appearing
+            return YES;
+            break;
+        default:
+            break;
+    }
+    
+    return YES;
+}
+
 
 -(void)block:(UIButton*)button{
     // ここに何かの処理を記述する
