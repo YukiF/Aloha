@@ -44,13 +44,17 @@
     //Loginボタン
     UIImage *img2 = [UIImage imageNamed:@"newUserBack.png"];  // ボタンにする画像を生成する
     login =  [UIButton buttonWithType:UIButtonTypeCustom];
-    login.frame = CGRectMake(0,rect.size.height/6.34482759*4,rect.size.width,rect.size.height/6.34482759);
+    login.frame = CGRectMake(0,rect.size.height/6.34482759*4 - 1,rect.size.width,rect.size.height/6.34482759);
     [login setBackgroundImage:img2 forState:UIControlStateNormal];  // 画像をセットする
     // ボタンが押された時にsendメソッドを呼び出す
     [login addTarget:self
                    action:@selector(toLogin:) forControlEvents:UIControlEventTouchUpInside];
-    [login setTitle:@"Log In" forState:UIControlStateNormal ];
-    login.titleLabel.font = [ UIFont fontWithName:@"PopJoyStd-B" size:rect.size.height/16];
+    [login setTitle:@"Log In" forState:UIControlStateNormal];
+//    login.titleLabel.frame = CGRectMake(160,8,rect.size.width,rect.size.width/2);
+//    login.titleLabel.center = CGPointMake(rect.size.width/2,rect.size.height/6.34482759/2);
+
+//    login.titleEdgeInsets = UIEdgeInsetsMake(160,8,rect.size.width,rect.size.width/2);
+    login.titleLabel.font = [ UIFont fontWithName:@"PopJoyStd-B" size:rect.size.height / 16];
     [login setTitleColor:[ UIColor whiteColor ] forState:UIControlStateNormal ];
     [self.view addSubview:login];
     

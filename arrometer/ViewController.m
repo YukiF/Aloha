@@ -364,19 +364,17 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
     static NSString *cellIdentifier = @"Cell";
     
     SWTableViewCell *cell = (SWTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-
     if (cell == nil) {
-        if (indexPath.row + 1 < cellNum) {
-            
-            cell = [[SWTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
-            cell.rightUtilityButtons = [self rightButtons];
-            cell.delegate = self;
-
-            [cell setBackgroundColor:[UIColor clearColor]];
-
-        }
+        
+        cell = [[SWTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
+        cell.rightUtilityButtons = [self rightButtons];
+        cell.delegate = self;
+        
+        [cell setBackgroundColor:[UIColor clearColor]];
+        
     }
     
+
 
     //http://works.sabitori.com/2011/06/18/table-redraw/
     // サブビューを取り除く
@@ -388,46 +386,6 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
     table.rowHeight = rect.size.height/6.4;
     
     /* -- cellに直接ラベルを載せれないので、UIViewを1クッション置く。 -- */
-    
-//    UIView * backView = [[UIView alloc] init];
-//    backView.frame = CGRectMake(0, 0, rect.size.width, rect.size.height/6.4);
-//    backView.backgroundColor = [UIColor clearColor];
-//    
-//    //backViewをcellに表示
-//    [cell.contentView addSubview:backView];
-//    
-//    if (indexPath.row + 1 < cellNum) {
-//        
-//        UIImage *blockBack = [UIImage imageNamed:@"newUserBack.png"];  // ボタンにする画像を生成する
-//        UIButton *blockBT = [[UIButton alloc]
-//                             initWithFrame:CGRectMake(0,0,rect.size.width,rect.size.height/6.34482759)];
-//        [blockBT setBackgroundImage:blockBack forState:UIControlStateNormal];  // 画像をセットする
-//        // ボタンが押された時にhogeメソッドを呼び出す
-//        [blockBT addTarget:self
-//                action:@selector(block:) forControlEvents:UIControlEventTouchUpInside];
-//        
-//        UILabel *blockLabel = [[UILabel alloc] init];
-//        blockLabel.frame = CGRectMake(160,8,rect.size.width,rect.size.width/4);
-//        blockLabel.center = CGPointMake(rect.size.width/2,rect.size.height/6.34482759/2);
-//        blockLabel.text = @"BLOCK";
-//        blockLabel.font = [UIFont fontWithName:@"PopJoyStd-B" size:rect.size.height/16];
-//        blockLabel.textColor = [UIColor whiteColor];
-//        blockLabel.textAlignment = NSTextAlignmentCenter;
-//        [backView addSubview:blockLabel];
-//        
-//    }else{
-//        
-////        addUser = [[UITextField alloc] initWithFrame:CGRectMake(0,0,rect.size.width,rect.size.height/6.4)];
-////        addUser.textAlignment = NSTextAlignmentCenter;
-////        addUser.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"+" attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor] ,}];
-////        addUser.font = [ UIFont fontWithName:@"PopJoyStd-B" size:rect.size.height/16];
-////        addUser.textColor = [UIColor whiteColor];
-////        addUser.returnKeyType = UIReturnKeyJoin;
-////        addUser.delegate = self;
-////        addUser.keyboardType = UIKeyboardTypeASCIICapable;
-////        [backView addSubview:addUser];
-//    }
-
     
     //UIViewクラスのfrontViewを生成
     frontView = [[UIView alloc] init];
@@ -466,6 +424,8 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
         [frontView addSubview:addUser];
 
     }
+    indexNum = indexPath.row;
+    
     return cell;
 }
 
@@ -487,18 +447,27 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
 
 - (void)swipeableTableViewCell:(SWTableViewCell *)cell scrollingToState:(SWCellState)state
 {
-    switch (state) {
-        case 0:
-            NSLog(@"utility buttons closed");
-            break;
-        case 1:
-            NSLog(@"left utility buttons open");
-            break;
-        case 2:
-            NSLog(@"right utility buttons open");
-            break;
-        default:
-            break;
+
+    // Delete button was pressed
+    NSIndexPath *cellIndexPath = [table indexPathForCell:cell];
+    NSLog(@"%d",cellIndexPath.row);
+    NSLog(@"%d",cellNum);
+    if (cellIndexPath.row < cellNum) {
+        
+        switch (state) {
+            case 0:
+                NSLog(@"utility buttons closed");
+                break;
+            case 1:
+                NSLog(@"left utility buttons open");
+                break;
+            case 2:
+                NSLog(@"right utility buttons open");
+                break;
+            default:
+                break;
+                
+        }
     }
 }
 
@@ -525,12 +494,14 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
 
 - (BOOL)swipeableTableViewCellShouldHideUtilityButtonsOnSwipe:(SWTableViewCell *)cell
 {
+    
     // allow just one cell's utility button to be open at once
     return YES;
 }
 
 - (BOOL)swipeableTableViewCell:(SWTableViewCell *)cell canSwipeToState:(SWCellState)state
 {
+    NSIndexPath *cellIndexPath = [table indexPathForCell:cell];
     switch (state) {
         case 1:
             // set to NO to disable all left utility buttons appearing
@@ -538,12 +509,15 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
             break;
         case 2:
             // set to NO to disable all right utility buttons appearing
-            return YES;
+            if (cellIndexPath.row + 1 < cellNum) {
+                
+                return YES;
+            }
+            return NO;
             break;
         default:
             break;
     }
-    
     return YES;
 }
 
@@ -589,7 +563,7 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    NSLog( @"%d",touch.view.tag );
+    NSLog( @"%ld",(long)touch.view.tag );
     if (filterView.alpha == 1.0) {
         // シングルタッチの場合
         touch = [touches anyObject];
