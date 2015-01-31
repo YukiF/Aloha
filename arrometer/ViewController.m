@@ -424,7 +424,6 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
         [frontView addSubview:addUser];
 
     }
-    indexNum = indexPath.row;
     
     return cell;
 }
@@ -449,10 +448,8 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
 {
 
     // Delete button was pressed
-    NSIndexPath *cellIndexPath = [table indexPathForCell:cell];
-    NSLog(@"%d",cellIndexPath.row);
-    NSLog(@"%d",cellNum);
-    if (cellIndexPath.row < cellNum) {
+    cellIndexPath = [table indexPathForCell:cell];
+       if (cellIndexPath.row < cellNum) {
         
         switch (state) {
             case 0:
@@ -484,12 +481,52 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
         case 1:
         {
             NSLog(@"block");
+            UIAlertView *alert =
+            [[UIAlertView alloc] initWithTitle:@"Confirm" message:@"Are you sure to block this person?"
+                                      delegate:self cancelButtonTitle:@"NO" otherButtonTitles:@"YES", nil];
+            [alert show];
+
 
             break;
         }
         default:
             break;
     }
+}
+
+-(void)alertView:(UIAlertView*)alertView
+clickedButtonAtIndex:(NSInteger)buttonIndex {
+    
+
+       switch (buttonIndex) {
+        case 0:
+            //１番目のボタンが押されたときの処理を記述する
+            NSLog(@"キャンセル");
+            NSLog(@"cellIndexPath.rowは%d",cellIndexPath.row);
+            NSLog(@"cellNumは%d",cellNum);
+
+            break;
+        case 1:
+        {
+            //２番目のボタンが押されたときの処理を記述する
+            NSLog(@"ブロック");
+            [friends removeObjectAtIndex:cellIndexPath.row];
+
+            cellNum = cellNum - 1;
+
+            [table deleteRowsAtIndexPaths:@[cellIndexPath] withRowAnimation:UITableViewRowAnimationLeft];
+
+            [table reloadData];
+            NSLog(@"cellNumは%d",cellNum);
+
+
+
+            break;
+        }
+        default:
+            break;
+    }
+    
 }
 
 - (BOOL)swipeableTableViewCellShouldHideUtilityButtonsOnSwipe:(SWTableViewCell *)cell
@@ -501,7 +538,9 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
 
 - (BOOL)swipeableTableViewCell:(SWTableViewCell *)cell canSwipeToState:(SWCellState)state
 {
-    NSIndexPath *cellIndexPath = [table indexPathForCell:cell];
+   cellIndexPath = [table indexPathForCell:cell];
+//    NSLog(@"cellIndexPath.rowは%d",cellIndexPath.row);
+//    NSLog(@"cellNumは%d",cellNum);
     switch (state) {
         case 1:
             // set to NO to disable all left utility buttons appearing

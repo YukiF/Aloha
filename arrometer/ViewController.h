@@ -24,7 +24,7 @@
     
     //セルの数
     int cellNum;
-    int indexNum;
+    NSIndexPath *cellIndexPath;
     
     //友達の名前の配列
     NSMutableArray *friends;
