@@ -40,6 +40,15 @@
 		986B87991A780632001EA102 /* UIProgressView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 986B87861A780632001EA102 /* UIProgressView+AFNetworking.m */; };
 		986B879A1A780632001EA102 /* UIRefreshControl+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 986B87881A780632001EA102 /* UIRefreshControl+AFNetworking.m */; };
 		986B879B1A780632001EA102 /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 986B878A1A780632001EA102 /* UIWebView+AFNetworking.m */; };
+		988C99271A7E0BD800526701 /* ModelManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 988C99261A7E0BD800526701 /* ModelManager.m */; };
+		988C993D1A7E1B0D00526701 /* MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 988C992D1A7E1B0D00526701 /* MD5.m */; };
+		988C993E1A7E1B0D00526701 /* MessageDigest.m in Sources */ = {isa = PBXBuildFile; fileRef = 988C992F1A7E1B0D00526701 /* MessageDigest.m */; };
+		988C993F1A7E1B0D00526701 /* nv_ios_digest.m in Sources */ = {isa = PBXBuildFile; fileRef = 988C99321A7E1B0D00526701 /* nv_ios_digest.m */; };
+		988C99401A7E1B0D00526701 /* SHA1.m in Sources */ = {isa = PBXBuildFile; fileRef = 988C99341A7E1B0D00526701 /* SHA1.m */; };
+		988C99411A7E1B0D00526701 /* SHA224.m in Sources */ = {isa = PBXBuildFile; fileRef = 988C99361A7E1B0D00526701 /* SHA224.m */; };
+		988C99421A7E1B0D00526701 /* SHA256.m in Sources */ = {isa = PBXBuildFile; fileRef = 988C99381A7E1B0D00526701 /* SHA256.m */; };
+		988C99431A7E1B0D00526701 /* SHA384.m in Sources */ = {isa = PBXBuildFile; fileRef = 988C993A1A7E1B0D00526701 /* SHA384.m */; };
+		988C99441A7E1B0D00526701 /* SHA512.m in Sources */ = {isa = PBXBuildFile; fileRef = 988C993C1A7E1B0D00526701 /* SHA512.m */; };
 		989C874E1A79AB2A006DC17E /* alohaIcon80.png in Resources */ = {isa = PBXBuildFile; fileRef = 989C874C1A79AB2A006DC17E /* alohaIcon80.png */; };
 		989C874F1A79AB2A006DC17E /* alohaIcon120.png in Resources */ = {isa = PBXBuildFile; fileRef = 989C874D1A79AB2A006DC17E /* alohaIcon120.png */; };
 		989C87511A79ABF0006DC17E /* alohaIcon180.png in Resources */ = {isa = PBXBuildFile; fileRef = 989C87501A79ABF0006DC17E /* alohaIcon180.png */; };
@@ -143,6 +152,25 @@
 		986B87881A780632001EA102 /* UIRefreshControl+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIRefreshControl+AFNetworking.m"; sourceTree = "<group>"; };
 		986B87891A780632001EA102 /* UIWebView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWebView+AFNetworking.h"; sourceTree = "<group>"; };
 		986B878A1A780632001EA102 /* UIWebView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+AFNetworking.m"; sourceTree = "<group>"; };
+		988C99251A7E0BD800526701 /* ModelManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ModelManager.h; path = ../ModelManager.h; sourceTree = "<group>"; };
+		988C99261A7E0BD800526701 /* ModelManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ModelManager.m; path = ../ModelManager.m; sourceTree = "<group>"; };
+		988C992C1A7E1B0D00526701 /* MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MD5.h; sourceTree = "<group>"; };
+		988C992D1A7E1B0D00526701 /* MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MD5.m; sourceTree = "<group>"; };
+		988C992E1A7E1B0D00526701 /* MessageDigest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageDigest.h; sourceTree = "<group>"; };
+		988C992F1A7E1B0D00526701 /* MessageDigest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageDigest.m; sourceTree = "<group>"; };
+		988C99301A7E1B0D00526701 /* nv-ios-digest-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "nv-ios-digest-Prefix.pch"; sourceTree = "<group>"; };
+		988C99311A7E1B0D00526701 /* nv_ios_digest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nv_ios_digest.h; sourceTree = "<group>"; };
+		988C99321A7E1B0D00526701 /* nv_ios_digest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = nv_ios_digest.m; sourceTree = "<group>"; };
+		988C99331A7E1B0D00526701 /* SHA1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHA1.h; sourceTree = "<group>"; };
+		988C99341A7E1B0D00526701 /* SHA1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHA1.m; sourceTree = "<group>"; };
+		988C99351A7E1B0D00526701 /* SHA224.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHA224.h; sourceTree = "<group>"; };
+		988C99361A7E1B0D00526701 /* SHA224.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHA224.m; sourceTree = "<group>"; };
+		988C99371A7E1B0D00526701 /* SHA256.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHA256.h; sourceTree = "<group>"; };
+		988C99381A7E1B0D00526701 /* SHA256.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHA256.m; sourceTree = "<group>"; };
+		988C99391A7E1B0D00526701 /* SHA384.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHA384.h; sourceTree = "<group>"; };
+		988C993A1A7E1B0D00526701 /* SHA384.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHA384.m; sourceTree = "<group>"; };
+		988C993B1A7E1B0D00526701 /* SHA512.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHA512.h; sourceTree = "<group>"; };
+		988C993C1A7E1B0D00526701 /* SHA512.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHA512.m; sourceTree = "<group>"; };
 		989C874C1A79AB2A006DC17E /* alohaIcon80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alohaIcon80.png; sourceTree = "<group>"; };
 		989C874D1A79AB2A006DC17E /* alohaIcon120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alohaIcon120.png; sourceTree = "<group>"; };
 		989C87501A79ABF0006DC17E /* alohaIcon180.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alohaIcon180.png; sourceTree = "<group>"; };
@@ -207,6 +235,8 @@
 		982F2E351A5B7B730067F7E2 /* frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				986B87651A780632001EA102 /* AFNetworking */,
+				986B87791A780632001EA102 /* UIKit+AFNetworking */,
 				986B875D1A7587D6001EA102 /* AudioToolbox.framework */,
 				982F2E3E1A5B7DA90067F7E2 /* Bolts.framework */,
 				982F2E3C1A5B7C440067F7E2 /* libz.dylib */,
@@ -274,6 +304,64 @@
 			path = "UIKit+AFNetworking";
 			sourceTree = "<group>";
 		};
+		988C99281A7E0C0200526701 /* models */ = {
+			isa = PBXGroup;
+			children = (
+				988C99251A7E0BD800526701 /* ModelManager.h */,
+				988C99261A7E0BD800526701 /* ModelManager.m */,
+			);
+			name = models;
+			sourceTree = "<group>";
+		};
+		988C99291A7E0C1300526701 /* views */ = {
+			isa = PBXGroup;
+			children = (
+				98FEF4371A5867DD00B2AE63 /* Main.storyboard */,
+			);
+			name = views;
+			sourceTree = "<group>";
+		};
+		988C992A1A7E0C3000526701 /* controllers */ = {
+			isa = PBXGroup;
+			children = (
+				98625C3A1A5F5C190021B929 /* firstViewController.h */,
+				98625C3B1A5F5C190021B929 /* firstViewController.m */,
+				982F2E401A5B863C0067F7E2 /* SignUpViewController.h */,
+				982F2E411A5B863C0067F7E2 /* SignUpViewController.m */,
+				98625C511A5FA84A0021B929 /* LoginViewController.h */,
+				98625C521A5FA84A0021B929 /* LoginViewController.m */,
+				98FEF4341A5867DD00B2AE63 /* ViewController.h */,
+				98FEF4351A5867DD00B2AE63 /* ViewController.m */,
+				98E48AD11A622ED00021B014 /* OptionViewController.h */,
+				98E48AD21A622ED00021B014 /* OptionViewController.m */,
+			);
+			name = controllers;
+			sourceTree = "<group>";
+		};
+		988C992B1A7E1B0D00526701 /* nv-ios-digest */ = {
+			isa = PBXGroup;
+			children = (
+				988C992C1A7E1B0D00526701 /* MD5.h */,
+				988C992D1A7E1B0D00526701 /* MD5.m */,
+				988C992E1A7E1B0D00526701 /* MessageDigest.h */,
+				988C992F1A7E1B0D00526701 /* MessageDigest.m */,
+				988C99301A7E1B0D00526701 /* nv-ios-digest-Prefix.pch */,
+				988C99311A7E1B0D00526701 /* nv_ios_digest.h */,
+				988C99321A7E1B0D00526701 /* nv_ios_digest.m */,
+				988C99331A7E1B0D00526701 /* SHA1.h */,
+				988C99341A7E1B0D00526701 /* SHA1.m */,
+				988C99351A7E1B0D00526701 /* SHA224.h */,
+				988C99361A7E1B0D00526701 /* SHA224.m */,
+				988C99371A7E1B0D00526701 /* SHA256.h */,
+				988C99381A7E1B0D00526701 /* SHA256.m */,
+				988C99391A7E1B0D00526701 /* SHA384.h */,
+				988C993A1A7E1B0D00526701 /* SHA384.m */,
+				988C993B1A7E1B0D00526701 /* SHA512.h */,
+				988C993C1A7E1B0D00526701 /* SHA512.m */,
+			);
+			path = "nv-ios-digest";
+			sourceTree = "<group>";
+		};
 		98AF13DB1A7B6C60007A9C57 /* PodFiles */ = {
 			isa = PBXGroup;
 			children = (
@@ -332,10 +420,9 @@
 		98FEF41E1A5867DD00B2AE63 = {
 			isa = PBXGroup;
 			children = (
+				988C992B1A7E1B0D00526701 /* nv-ios-digest */,
 				98AF13DB1A7B6C60007A9C57 /* PodFiles */,
 				98E1AB001A7A0DDB007A807D /* FOT-PopJoyStd-B.otf */,
-				986B87651A780632001EA102 /* AFNetworking */,
-				986B87791A780632001EA102 /* UIKit+AFNetworking */,
 				982F2E351A5B7B730067F7E2 /* frameworks */,
 				98FEF4291A5867DD00B2AE63 /* arrometer */,
 				98FEF4461A5867DD00B2AE63 /* arrometerTests */,
@@ -364,17 +451,9 @@
 				986B875F1A759370001EA102 /* 新規録音.wav */,
 				98FEF42E1A5867DD00B2AE63 /* AppDelegate.h */,
 				98FEF42F1A5867DD00B2AE63 /* AppDelegate.m */,
-				98FEF4371A5867DD00B2AE63 /* Main.storyboard */,
-				98625C3A1A5F5C190021B929 /* firstViewController.h */,
-				98625C3B1A5F5C190021B929 /* firstViewController.m */,
-				982F2E401A5B863C0067F7E2 /* SignUpViewController.h */,
-				982F2E411A5B863C0067F7E2 /* SignUpViewController.m */,
-				98625C511A5FA84A0021B929 /* LoginViewController.h */,
-				98625C521A5FA84A0021B929 /* LoginViewController.m */,
-				98FEF4341A5867DD00B2AE63 /* ViewController.h */,
-				98FEF4351A5867DD00B2AE63 /* ViewController.m */,
-				98E48AD11A622ED00021B014 /* OptionViewController.h */,
-				98E48AD21A622ED00021B014 /* OptionViewController.m */,
+				988C99281A7E0C0200526701 /* models */,
+				988C99291A7E0C1300526701 /* views */,
+				988C992A1A7E0C3000526701 /* controllers */,
 				98FEF43A1A5867DD00B2AE63 /* Images.xcassets */,
 				98FEF43C1A5867DD00B2AE63 /* LaunchScreen.xib */,
 				98FEF4311A5867DD00B2AE63 /* arrometer.xcdatamodeld */,
@@ -530,6 +609,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				988C993D1A7E1B0D00526701 /* MD5.m in Sources */,
 				986B87931A780632001EA102 /* AFURLSessionManager.m in Sources */,
 				986B87901A780632001EA102 /* AFURLConnectionOperation.m in Sources */,
 				98AF13ED1A7B6C60007A9C57 /* SWUtilityButtonView.m in Sources */,
@@ -537,20 +617,27 @@
 				986B87971A780632001EA102 /* UIButton+AFNetworking.m in Sources */,
 				986B87991A780632001EA102 /* UIProgressView+AFNetworking.m in Sources */,
 				986B878B1A780632001EA102 /* AFHTTPRequestOperation.m in Sources */,
+				988C99421A7E1B0D00526701 /* SHA256.m in Sources */,
 				98AF13E81A7B6C60007A9C57 /* NSMutableArray+SWUtilityButtons.m in Sources */,
 				98FEF4301A5867DD00B2AE63 /* AppDelegate.m in Sources */,
 				986B87961A780632001EA102 /* UIAlertView+AFNetworking.m in Sources */,
 				986B878C1A780632001EA102 /* AFHTTPRequestOperationManager.m in Sources */,
 				98E48AD31A622ED00021B014 /* OptionViewController.m in Sources */,
 				98625C3C1A5F5C190021B929 /* firstViewController.m in Sources */,
+				988C99441A7E1B0D00526701 /* SHA512.m in Sources */,
 				98AF13E91A7B6C60007A9C57 /* SWCellScrollView.m in Sources */,
+				988C993F1A7E1B0D00526701 /* nv_ios_digest.m in Sources */,
 				986B87981A780632001EA102 /* UIImageView+AFNetworking.m in Sources */,
 				986B878D1A780632001EA102 /* AFHTTPSessionManager.m in Sources */,
+				988C99401A7E1B0D00526701 /* SHA1.m in Sources */,
+				988C993E1A7E1B0D00526701 /* MessageDigest.m in Sources */,
 				98AF13EA1A7B6C60007A9C57 /* SWLongPressGestureRecognizer.m in Sources */,
 				986B87951A780632001EA102 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				98AF13EB1A7B6C60007A9C57 /* SWTableViewCell.m in Sources */,
+				988C99431A7E1B0D00526701 /* SHA384.m in Sources */,
 				986B87941A780632001EA102 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				982F2E421A5B863C0067F7E2 /* SignUpViewController.m in Sources */,
+				988C99271A7E0BD800526701 /* ModelManager.m in Sources */,
 				98FEF42D1A5867DD00B2AE63 /* main.m in Sources */,
 				98625C531A5FA84A0021B929 /* LoginViewController.m in Sources */,
 				98AF13EC1A7B6C60007A9C57 /* SWUtilityButtonTapGestureRecognizer.m in Sources */,
@@ -560,6 +647,7 @@
 				986B878E1A780632001EA102 /* AFNetworkReachabilityManager.m in Sources */,
 				986B879B1A780632001EA102 /* UIWebView+AFNetworking.m in Sources */,
 				986B87921A780632001EA102 /* AFURLResponseSerialization.m in Sources */,
+				988C99411A7E1B0D00526701 /* SHA224.m in Sources */,
 				98FEF4331A5867DD00B2AE63 /* arrometer.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

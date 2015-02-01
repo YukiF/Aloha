@@ -7,9 +7,15 @@
 //
 
 #import "LoginViewController.h"
+#import "ModelManager.h"
+#import <Foundation/Foundation.h>
+
+
 
 @interface LoginViewController ()
-
+{
+    ModelManager *_modelManager;
+}
 @end
 
 @implementation LoginViewController
@@ -80,6 +86,12 @@
     back.titleLabel.font = [ UIFont fontWithName:@"AvenirNext-UltraLight" size:rect.size.height/16];
     [back setTitleColor:[ UIColor whiteColor ] forState:UIControlStateNormal ];
     [self.view addSubview:back];
+    
+    _modelManager = [ModelManager sharedManager];
+    
+    [_modelManager addObserver:self forKeyPath:@"user" options:0 context:nil];
+    [_modelManager addObserver:self forKeyPath:@"posts" options:0 context:nil];
+    
 
 }
 
@@ -165,43 +177,21 @@
         
     }else{
         
-//        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-//        NSDictionary *parameters = @{@"name":userName.text,@"pass":pass.text};
-//        [manager GET:@"https://hidden-atoll-8201.herokuapp.com/api/v1/members/" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//
-//            //            if ([responseObject[@"name"] isEqualToString:userName.text]) {
-////                NSLog(@"%d",[responseObject[@"id"] intValue]);
-////            }
-//            
-//            NSLog(@"JSON: %@", responseObject);
-//        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//            NSLog(@"Error: %@", error);
-//        }];
-        // AFHTTPRequestOperationManagerを利用して、http://localhost/test.jsonからJSONデータを取得する
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        MD5 *md5 = [MD5 md5WithString:pass.text];
         
-        [manager GET:@"https://hidden-atoll-8201.herokuapp.com/api/v1/members/"
-          parameters:@{@"name" :userName.text}
-             success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                 // 通信に成功した場合の処理
-                 NSLog(@"responseObject: %@", responseObject);
+        // MD5 ハッシュ値を文字列として出力する。
+        // "md5 = 080aef839b95facf73ec599375e92d47" が出力される。
+        NSLog(@"md5 = %@", md5);
+        
+        NSDictionary *params = @{
+                                 @"user":@{
+                                         @"name":[userName.text lowercaseString],
+                                         @"password":md5,
+                                         }
+                                 };
+        
+        [_modelManager login:params];
 
-//                 NSString *trueUser = responseObject[[userName.text lowercaseString]];
-//                 NSString *trueUser = [responseObject objectForKey:[userName.text lowercaseString]];
-//                  NSArray *ar = [responseObject allValues];
-
-
-//                 NSLog(@"%@",trueUser);
-//                 if ([responseObject[@"name"] isEqualToString:userName.text]) {
-//                     NSDictionary *result = responseObject;
-//                     NSLog(@"%d",[result[@"id"] intValue]);
-//                 }
-               
-             }
-             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                 // エラーの場合はエラーの内容をコンソールに出力する
-                 NSLog(@"Error: %@", error);
-             }];
     }
 }
 

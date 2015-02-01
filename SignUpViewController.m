@@ -219,6 +219,8 @@
         
 //        NSArray *key = [NSArray arrayWithObjects:userName, nil];
 //        responseObject = [NSDictionary dictionaryWithObjects:responseObject forKeys:key];
+//        NSArray *ar = [responseObject allKeys];
+//        NSLog(@"%@",ar);
 
         
         NSUserDefaults *userSave = [NSUserDefaults standardUserDefaults];
