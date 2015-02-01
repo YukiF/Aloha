@@ -10,6 +10,8 @@
 #import "ViewController.h"
 #import "AFNetworking.h"
 #import "firstViewController.h"
+#import <CoreLocation/CoreLocation.h>
+
 
 
 //PFUser *user;

@@ -14,13 +14,22 @@
 #import "firstViewController.h"
 #import "SWTableViewCell.h"
 
+//GPS用
+CLLocationManager *locationManager;
+float myLatitude;
+float myLongitude;
 
 @interface ViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,UIScrollViewDelegate,CLLocationManagerDelegate,SWTableViewCellDelegate>{
     
     UITableView *table;
     
+    //table scroll point
+    CGPoint scrollBeginingPoint;
+    CGPoint currentPoint;
+    
     UIRefreshControl *refreshControl;//引っ張って更新
-
+    
+    int tableScrollJudge;
     
     //セルの数
     int cellNum;
@@ -71,10 +80,7 @@
     CGPoint location3;
     
 
-    //GPS用
-    CLLocationManager *locationManager;
-    float myLatitude;
-    float myLongitude;
+    
     
     //sampleの緯度経度
     float targetLatitude;

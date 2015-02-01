@@ -192,6 +192,7 @@
     shotJudge = 0;
     pullJudge = 0;
     lightJudge = 0;
+    tableScrollJudge = 0;
 
 
     
@@ -353,7 +354,38 @@ float CalculateAngle(float nLat1, float nLon1, float nLat2, float nLon2)
     return cellNum;
 }
 
-
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    currentPoint = [scrollView contentOffset];
+//    NSArray *arr = [table visibleCells];
+//    
+//    for(UITableViewCell *Cell in arr) {
+//        
+//        NSIndexPath *path = [table indexPathForCell:Cell];
+//        CGPoint offset = table.contentOffset;
+//        NSLog(@"Frame: %@",NSStringFromCGRect(Cell.frame));
+//        
+//        if (scrollBeginingPoint.y > currentPoint.y) {
+//            NSLog(@"指を下方向にスクロールさせています.");
+//            CGRect originFrame = Cell.frame;
+//
+//            //アニメーション前の状態を設定
+//            [UIView animateWithDuration:0.5
+//                                  delay:0
+//                                options:UIViewAnimationOptionAllowUserInteraction
+//                             animations:^{
+//                                 Cell.alpha = 0.1f;
+//                                 Cell.frame = CGRectMake(originFrame.origin.x + 30, originFrame.origin.y, originFrame.size.width, originFrame.size.height);
+//                                 NSLog(@"アニメーションでてこいやあ");
+//                                 
+//                             } completion:nil];
+//            
+//
+//        
+//        
+//    }
+//    }
+    
+}
 
 
 //セルの作り方の設定と、セルの内容を決めるメソッド
@@ -508,8 +540,10 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
             break;
         case 1:
         {
+            tableScrollJudge = 1;
             //２番目のボタンが押されたときの処理を記述する
             NSLog(@"ブロック");
+            
             [friends removeObjectAtIndex:cellIndexPath.row];
 
             cellNum = cellNum - 1;
@@ -518,14 +552,20 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
 
             [table reloadData];
             NSLog(@"cellNumは%d",cellNum);
-
-
+            [self performSelector:@selector(changeTableScrollJudge)withObject:nil afterDelay:0.5];
 
             break;
         }
         default:
             break;
     }
+    
+}
+
+-(void)changeTableScrollJudge{
+    
+    tableScrollJudge = 0;
+
     
 }
 
@@ -600,35 +640,85 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    scrollBeginingPoint = [scrollView contentOffset];
+}
+
+
+//http://youngforever.hatenablog.com/entry/2014/05/14/164647
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(tableScrollJudge == 0){
+        
+        if (scrollBeginingPoint.y <= currentPoint.y){
+            NSLog(@"指を上方向にスクロールさせています.");
+            //オリジナルのcellのframeとっておく
+            CGRect originFrame = cell.frame;
+            //アニメーション前の状態を設定
+            cell.alpha = 0.1f;
+            cell.backgroundColor = [UIColor clearColor];
+            cell.frame = CGRectMake(originFrame.origin.x + 30, originFrame.origin.y, originFrame.size.width, originFrame.size.height);
+            
+            //0.5秒かけて、もとの状態へアニメーション
+            [UIView animateWithDuration:0.25
+                                  delay:0
+                                options:UIViewAnimationOptionAllowUserInteraction
+                             animations:^{
+                                 cell.alpha = 1.0;
+                                 cell.frame = CGRectMake(originFrame.origin.x, originFrame.origin.y, originFrame.size.width, originFrame.size.height);
+                             } completion:nil];
+        }else if (scrollBeginingPoint.y > currentPoint.y){
+            NSLog(@"指を下方向にスクロールさせています.");
+            //オリジナルのcellのframeとっておく
+            CGRect originFrame = cell.frame;
+            //アニメーション前の状態を設定
+            cell.alpha = 0.1f;
+            cell.frame = CGRectMake(originFrame.origin.x - 30, originFrame.origin.y, originFrame.size.width, originFrame.size.height);
+            //0.5秒かけて、もとの状態へアニメーション
+            [UIView animateWithDuration:0.25
+                                  delay:0
+                                options:UIViewAnimationOptionAllowUserInteraction
+                             animations:^{
+                                 cell.alpha = 1.0;
+                                 cell.frame = CGRectMake(originFrame.origin.x, originFrame.origin.y, originFrame.size.width, originFrame.size.height);
+                             } completion:nil];
+        }
+    }
+
+}
+
+
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    touch = [touches anyObject];
     NSLog( @"%ld",(long)touch.view.tag );
     if (filterView.alpha == 1.0) {
         // シングルタッチの場合
-        touch = [touches anyObject];
         location1 = [touch locationInView:filterView];
         //    NSLog(@"x:%f y:%f", location1.x, location1.y);
+    }else if ( touch.view.tag == fukidasi.tag ){
+        fukidasiJudge = 1;
+        location1 = [touch locationInView:self.view];
+        
     }else{
-        
-        touch = [touches anyObject];
-        if ( touch.view.tag == fukidasi.tag ){
-            fukidasiJudge = 1;
-            location1 = [touch locationInView:self.view];
+        NSLog(@"%f",location1.y);
+        location1 = [touch locationInView:self.view];
 
-        }
-        
     }
 }
 
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{
     NSLog(@"%d",fukidasiJudge);
+    
+    touch = [touches anyObject];
+
+    
     if (filterView.alpha == 1.0) {
         
         if (targetAzimuth <= 15 || targetAzimuth >= 345) {
             arrowLight.alpha = 0.0;
             [arrowLight.layer removeAllAnimations];
             if (shotJudge == 0) {
-                touch = [touches anyObject];
                 location2 = [touch locationInView:filterView];
                 //            NSLog(@"x:%f y:%f", location2.x, location2.y);
                 [locationManager stopUpdatingHeading];
@@ -649,10 +739,15 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
         }
     }else if(fukidasiJudge == 1){
         
-        touch = [touches anyObject];
         location2 = [touch locationInView:self.view];
         fukidasi.center = CGPointMake(location2.x, location2.y);
         NSLog(@"%@",NSStringFromCGPoint(fukidasi.center));
+    }else{
+        
+        location2 = [touch locationInView:self.view];
+        NSLog(@"%f",location2.y);
+
+        
     }
 }
 
@@ -842,7 +937,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex {
     }else{
         addJudge = 1;
         [friends addObject:addUser.text];
-        cellNum = (int)[friends count] + 1;
+        cellNum = cellNum + 1;
         [table reloadData];
         NSLog(@"%@",friends);
     }

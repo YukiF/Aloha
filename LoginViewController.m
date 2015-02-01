@@ -154,47 +154,55 @@
     NSLog(@"%@",userName.text);
     NSLog(@"%@",pass.text);
     
-//    [PFUser logInWithUsernameInBackground:userName.text password:pass.text block:^(PFUser *user, NSError *error) {
-//        // ログインに成功すると該当ユーザーのオブジェクトを取得することが出来る
-//        if (user) {
-//            // ログインに成功した場合
-//            //success
-//            ViewController *ViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"VC"];
-//            [self presentViewController:ViewController animated:YES completion:nil];
-//        } else {
-//            // ログインに失敗した場合
-//            UIAlertView *Alert2 = [[UIAlertView alloc]initWithTitle:@"ログインできません。" message:@"ユーザー名、又はパスワードが間違っています。" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-//            [Alert2 show];
-//
-//        }
-//    }];
+   
     
-//    if ([userName.text length] == 0 || [pass.text length] == 0) {
-//        
-//        UIAlertView *Alert1 = [[UIAlertView alloc]initWithTitle:@"登録できません。" message:@"全ての空欄を埋めて下さい。" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-//        [Alert1 show];
-//        
-//        
-//    }else{
-//        
-//        //Signing up
-//        user = [PFUser user];
-//        user.username = userName.text;
-//        user.password = pass.text;
-//        [user signUpInBackgroundWithBlock:^(BOOL succeede, NSError *error){
-//            if(!error){
-//                
-//                //success
-//                ViewController *ViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"VC"];
-//                [self presentViewController:ViewController animated:YES completion:nil];
-//                
-//            }else{
-//                
-//                UIAlertView *Alert2 = [[UIAlertView alloc]initWithTitle:@"登録できません。" message:@"名前が重複しています。変更して下さい。" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-//                [Alert2 show];
-//            }
+    
+    if ([userName.text length] == 0 || [pass.text length] == 0) {
+        
+        UIAlertView *Alert1 = [[UIAlertView alloc]initWithTitle:@"登録できません。" message:@"全ての空欄を埋めて下さい。" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+        [Alert1 show];
+        
+        
+    }else{
+        
+//        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//        NSDictionary *parameters = @{@"name":userName.text,@"pass":pass.text};
+//        [manager GET:@"https://hidden-atoll-8201.herokuapp.com/api/v1/members/" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//
+//            //            if ([responseObject[@"name"] isEqualToString:userName.text]) {
+////                NSLog(@"%d",[responseObject[@"id"] intValue]);
+////            }
+//            
+//            NSLog(@"JSON: %@", responseObject);
+//        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//            NSLog(@"Error: %@", error);
 //        }];
-//    }
+        // AFHTTPRequestOperationManagerを利用して、http://localhost/test.jsonからJSONデータを取得する
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        
+        [manager GET:@"https://hidden-atoll-8201.herokuapp.com/api/v1/members/"
+          parameters:@{@"name" :userName.text}
+             success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                 // 通信に成功した場合の処理
+                 NSLog(@"responseObject: %@", responseObject);
+
+//                 NSString *trueUser = responseObject[[userName.text lowercaseString]];
+//                 NSString *trueUser = [responseObject objectForKey:[userName.text lowercaseString]];
+//                  NSArray *ar = [responseObject allValues];
+
+
+//                 NSLog(@"%@",trueUser);
+//                 if ([responseObject[@"name"] isEqualToString:userName.text]) {
+//                     NSDictionary *result = responseObject;
+//                     NSLog(@"%d",[result[@"id"] intValue]);
+//                 }
+               
+             }
+             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                 // エラーの場合はエラーの内容をコンソールに出力する
+                 NSLog(@"Error: %@", error);
+             }];
+    }
 }
 
 

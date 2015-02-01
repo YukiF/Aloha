@@ -28,6 +28,27 @@
     //ステータスバーを除いたサイズ
     rect = sc.applicationFrame;
     
+    //GPSの利用可否判断
+    if ([CLLocationManager locationServicesEnabled]) {
+        locationManager = [[CLLocationManager alloc] init];
+        locationManager.delegate = self;
+        locationManager.distanceFilter = 1000.0;
+        [locationManager startUpdatingLocation];
+        NSLog(@"Start updating location.");
+        
+        // iOS8未満は、このメソッドは無いので
+        if ([locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+            
+            // GPSを取得する旨の認証をリクエストする
+            // 「このアプリ使っていない時も取得するけどいいでしょ？」
+            [locationManager requestAlwaysAuthorization];
+        }
+        
+    } else {
+        NSLog(@"The location services is disabled.");
+    }
+
+    
     //背景画像
     UIImage *haikei = [UIImage imageNamed:@"signUpLogin.png"];
     UIImageView *haikeiPic = [[UIImageView alloc]initWithImage:haikei];
@@ -179,7 +200,7 @@
 {
     
     AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager manager];
-    NSDictionary* param = @{@"name" : userName.text, @"password" : pass.text};
+    NSDictionary* param = @{@"name" : userName.text, @"password" : pass.text, @"latitude" : [NSString stringWithFormat:@"%f",myLatitude], @"longitude" : [NSString stringWithFormat:@"%f", myLongitude]};
     [manager POST:@"https://hidden-atoll-8201.herokuapp.com/api/v1/members/" parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         NSLog(@"response: %@", responseObject);
@@ -188,8 +209,17 @@
         userId = [responseObject[@"id"] intValue];
         NSLog(@"ID %d",userId);
         
-        userName = responseObject[@"name"];
+
+        
+        
+        NSString *nameSmall = responseObject[@"name"];
+        NSLog(@"User Name %@",nameSmall);
+        userName = [nameSmall uppercaseString];
         NSLog(@"User Name %@",userName);
+        
+//        NSArray *key = [NSArray arrayWithObjects:userName, nil];
+//        responseObject = [NSDictionary dictionaryWithObjects:responseObject forKeys:key];
+
         
         NSUserDefaults *userSave = [NSUserDefaults standardUserDefaults];
         [userSave setInteger:userId forKey:@"userId"];
@@ -214,6 +244,26 @@
     }];
     
 }
+
+- (void)locationManager:(CLLocationManager *)manager
+     didUpdateLocations:(NSArray *)locations
+{
+    
+    
+    CLLocation *newLocation = [locations lastObject];
+    // 位置情報を取り出す
+    //緯度
+    myLatitude = newLocation.coordinate.latitude;
+    //経度
+    myLongitude = newLocation.coordinate.longitude;
+    
+    
+    NSLog(@"%f",myLatitude);
+    NSLog(@"%f",myLongitude);
+    NSLog(@"位置情報取得中");
+    
+}
+
 
 
 

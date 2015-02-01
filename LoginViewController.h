@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "ViewController.h"
 #import "firstViewController.h"
+#import "AFNetworking.h"
+
 
 
 @interface LoginViewController : UIViewController<UITextFieldDelegate>{
@@ -25,6 +27,5 @@
     //ステータスバーを除いたサイズ
     CGRect rect;
 }
-
 
 @end
