@@ -13,10 +13,6 @@
 #import <CoreLocation/CoreLocation.h>
 
 
-
-//PFUser *user;
-
-
 @interface SignUpViewController : UIViewController<UITextFieldDelegate>{
     
     

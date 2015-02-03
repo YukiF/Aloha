@@ -24,9 +24,9 @@
     
     NSUserDefaults *userSave = [NSUserDefaults standardUserDefaults];
     userId = [userSave integerForKey:@"userId"];
-    userName = [userSave objectForKey:@"userName"];
+    userNameString = [userSave objectForKey:@"userName"];
     NSLog(@"%d",userId);
-    NSLog(@"%@",userName);
+    NSLog(@"%@",userNameString);
 
     
     //ステータスバーが見えていたら消す
@@ -69,7 +69,7 @@
     UILabel *myLabel = [[UILabel alloc] init];
     myLabel.frame = CGRectMake(0,0,rect.size.width,rect.size.width/4);
     myLabel.center = CGPointMake(rect.size.width/2,rect.size.height  * 0.145833333333333333333333/2);
-    myLabel.text = userName;
+    myLabel.text = userNameString;
     UIFont *font = [UIFont fontWithName:@"PopJoyStd-B" size:rect.size.height/16];
     [myLabel setFont:font];
     myLabel.textColor = [UIColor whiteColor];

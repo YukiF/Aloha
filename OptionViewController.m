@@ -63,7 +63,7 @@
     NSUserDefaults *userSave = [NSUserDefaults standardUserDefaults];
     userId = (int)[userSave integerForKey:@"userId"];
     NSLog(@"%d",userId);
-    userName = [userSave objectForKey:@"userName"];
+    userNameString = [userSave objectForKey:@"userName"];
 
 }
 
@@ -85,10 +85,10 @@
 -(void)logout:(UIButton*)button{
     
     userId = 0;
-    userName = nil;
+    userNameString = nil;
     NSUserDefaults *userSave = [NSUserDefaults standardUserDefaults];
     [userSave setInteger:userId forKey:@"userId"];
-    [userSave setObject:userName forKey:@"userName"];
+    [userSave setObject:userNameString forKey:@"userName"];
 
 
     ViewController *ViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"FVC"];

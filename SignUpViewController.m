@@ -208,24 +208,14 @@
         //ユーザーのid番号をいれたい
         userId = [responseObject[@"id"] intValue];
         NSLog(@"ID %d",userId);
-        
-
-        
-        
         NSString *nameSmall = responseObject[@"name"];
         NSLog(@"User Name %@",nameSmall);
-        userName = [nameSmall uppercaseString];
-        NSLog(@"User Name %@",userName);
-        
-//        NSArray *key = [NSArray arrayWithObjects:userName, nil];
-//        responseObject = [NSDictionary dictionaryWithObjects:responseObject forKeys:key];
-//        NSArray *ar = [responseObject allKeys];
-//        NSLog(@"%@",ar);
-
+        userNameString = [nameSmall uppercaseString];
+        NSLog(@"User Name %@",userNameString);
         
         NSUserDefaults *userSave = [NSUserDefaults standardUserDefaults];
         [userSave setInteger:userId forKey:@"userId"];
-        [userSave setObject:userName forKey:@"userName"];
+        [userSave setObject:userNameString forKey:@"userName"];
 
         
         
@@ -244,7 +234,6 @@
                 [alert show];
 
     }];
-    
 }
 
 - (void)locationManager:(CLLocationManager *)manager

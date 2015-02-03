@@ -177,16 +177,10 @@
         
     }else{
         
-        MD5 *md5 = [MD5 md5WithString:pass.text];
-        
-        // MD5 ハッシュ値を文字列として出力する。
-        // "md5 = 080aef839b95facf73ec599375e92d47" が出力される。
-        NSLog(@"md5 = %@", md5);
-        
         NSDictionary *params = @{
                                  @"user":@{
                                          @"name":[userName.text lowercaseString],
-                                         @"password":md5,
+                                         @"password":[pass.text lowercaseString],
                                          }
                                  };
         
@@ -194,6 +188,23 @@
 
     }
 }
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if([keyPath isEqualToString:@"user"]){
+        NSLog(@"user:%@",_modelManager.user);
+        [_modelManager getPosts];
+    }else if([keyPath isEqualToString:@"posts"]){
+        NSLog(@"posts:%@",_modelManager.posts);
+    }
+}
+
+- (void)dealloc
+{
+    [_modelManager removeObserver:self forKeyPath:@"user"];
+    [_modelManager removeObserver:self forKeyPath:@"posts"];
+}
+
 
 
 -(void)back:(UIButton*)button{

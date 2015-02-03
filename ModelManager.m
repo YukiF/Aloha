@@ -57,6 +57,8 @@
         [self willChangeValueForKey:@"user"];
         _user = response;
         [self didChangeValueForKey:@"user"];
+        NSLog(@"ログイン完了！");
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
     }];
